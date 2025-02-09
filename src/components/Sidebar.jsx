@@ -6,6 +6,11 @@ import Product from "../Pages/Product/Product";
 import Order from "../Pages/Order/Order";
 import User from "../Pages/User/User";
 import Category from "../Pages/Category/Category";
+import Image1 from "../assets/image1";
+import Image2 from "../assets/image2";
+import Image3 from "../assets/image3";
+import Image4 from "../assets/image4";
+import Image5 from "../assets/image5";
 
 const Sidebar = () => {
   const location = useLocation(); // Get current location (path)
@@ -30,7 +35,9 @@ const Sidebar = () => {
             location.pathname === "/dashboard" ? "bg-main text-white" : "bg-white"
           }`}
         >
-          <div className="w-5 h-5 bg-gray-700"></div>
+          <div className="w-5 h-5 ">
+            <Image1/>
+          </div>
           <p>Dashboard</p>
         </Link>
 
@@ -41,7 +48,9 @@ const Sidebar = () => {
             location.pathname === "/product" ? "bg-main text-white" : "bg-white"
           }`}
         >
-          <div className="w-5 h-5 bg-gray-700"></div>
+          <div className="w-5 h-5 ">
+            <Image2/>
+          </div>
           <p>Products</p>
         </Link>
 
@@ -52,7 +61,9 @@ const Sidebar = () => {
             location.pathname === "/order" ? "bg-main text-white" : "bg-white"
           }`}
         >
-          <div className="w-5 h-5 bg-gray-700"></div>
+          <div className="w-5 h-5 ">
+            <Image3/>
+          </div>
           <p>Orders</p>
         </Link>
 
@@ -60,10 +71,12 @@ const Sidebar = () => {
         <Link
           to="/user" // Users route
           className={`text-black text-lg font-medium p-2 rounded-md transition-colors duration-300 flex items-center gap-2 border-none ${
-            location.pathname === "/user" || location.pathname === "/user/info" ? "bg-main text-white" : "bg-white"
+            location.pathname === "/user" || location.pathname === "/user/info" ||location.pathname.startsWith("/update_user/") ? "bg-main text-white" : "bg-white"
           }`}
         >
-          <div className="w-5 h-5 bg-gray-700"></div>
+          <div className="w-5 h-5 ">
+            <Image4/>
+          </div>
           <p>Users</p>
         </Link>
 
@@ -74,7 +87,9 @@ const Sidebar = () => {
             (location.pathname === "/category" || location.pathname === "/category/update") ? "bg-main text-white" : "bg-white"
           }`}
         >
-          <div className="w-5 h-5 bg-gray-700"></div>
+          <div className="w-5 h-5 ">
+            <Image5/>
+          </div>
           <p>Categories</p>
         </Link>
           {/* settings link */}
@@ -84,7 +99,9 @@ const Sidebar = () => {
             (location.pathname === "/settings" ) ? "bg-main text-white" : "bg-white"
           }`}
         >
-          <div className="w-5 h-5 bg-gray-700"></div>
+          <div className="w-5 h-5 ">
+            <Image2/>
+          </div>
           <p>Setting</p>
         </Link>
       </nav>

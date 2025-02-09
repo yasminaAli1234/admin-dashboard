@@ -5,64 +5,58 @@ import { useGet } from "../../Hooks/useGet";
 import { usePost } from "../../Hooks/usePostJson";
 import axios from "axios";
 import { useAuth } from "../../Context/Auth";
+import { useDelete } from "../../Hooks/useDelete";
+
 const Update_category = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [value, setValue] = useState("");
-  const [name,setName] = useState("")
+  const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [subCategories, setSubCategories] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showAddPopup, setShowAddPopup] = useState(false);
+  const [showUpdatePopup, setShowUpdatePopup] = useState(false);
   const [editingSubCategory, setEditingSubCategory] = useState(null);
   const [subcategoryToDelete, setSubcategoryToDelete] = useState(null);
   const [deletePopupVisible, setDeletePopupVisible] = useState(false);
-  const [categoryId,setCategoryId] = useState('')
-   const {refetch: refetchSubCategory,loading: loadingSubCategory,data: subCategory,} = useGet({url: `https://marfaa-alex.com/api/admin/subCategories`,});
-  const { state } = useLocation(); // Get state passed via navigate
-  const { category } = state || {}; 
-  const auth = useAuth()
+  const [categoryId, setCategoryId] = useState("");
+
+  const { refetch: refetchSubCategory, loading: loadingSubCategory, data: subCategory } = useGet({
+    url: `https://marfaa-alex.com/api/admin/subCategories`,
+  });
+
+  const { state } = useLocation();
+  const { category } = state || {};
+  const auth = useAuth();
+
   const { postData, loadingPost, response } = usePost({
     url: `https://marfaa-alex.com/api/admin/add/subcategory`,
   });
+   const { deleteData, loadingDelete, responseDelete } = useDelete();
 
-useEffect(() => {
-if(category){
-  setValue(category.name)
-  setImage(category.image)
-  setCategoryId(category.id)
-}
-}, [category])
+  useEffect(() => {
+    if (category) {
+      setValue(category.name);
+      setImage(category.image);
+      setCategoryId(category.id);
+    }
+  }, [category]);
 
-useEffect(() => {
-  refetchSubCategory()
-}, [refetchSubCategory])
+  useEffect(() => {
+    refetchSubCategory();
+  }, [refetchSubCategory]);
 
-
-useEffect(() => {
-  if(subCategory){
-    setSubCategories(subCategory.subCategories)
-  }
-  console.log('data' , subCategory)
-}, [subCategory])
-
-  
-
-  // Load saved subcategories from localStorage on component mount
-  // useEffect(() => {
-  //   const savedSubCategories = JSON.parse(localStorage.getItem("subCategoriesy") || "[]");
-  //   setSubCategories(savedSubCategories);
-  // }, []);
-
-  // Save subcategories to localStorage whenever they change
-  // useEffect(() => {
-  //   localStorage.setItem("subCategoriesy", JSON.stringify(subCategories));
-  // }, [subCategories]);
+  useEffect(() => {
+    if (subCategory) {
+      setSubCategories(subCategory.subCategories);
+    }
+  }, [subCategory]);
 
   const handleGoBack = () => navigate(-1);
 
-  // Add or Update SubCategory
-  const handleAddOrUpdateSubCategory = async () => {
+  // Handle Add New SubCategory
+  const handleAddSubCategory = async () => {
     if (!categoryId || !name || !image) {
       auth.toastError("Please fill in all fields.");
       return;
@@ -74,74 +68,85 @@ useEffect(() => {
     formData.append("image", image);
 
     try {
-      if (editingSubCategory !== null) {
-        // Update SubCategory
-        await axios.put(
-          `https://marfaa-alex.com/api/admin/subCategory/update/${editingSubCategory.id}`,
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } ,
-        "Authorization": `Bearer ${auth.user?.token || ""}`,
-        }
-        );
-        auth.toastSuccess("Subcategory updated successfully!");
-      } else {
-        // Add New SubCategory
-    postData(formData,"data added succssful")
-      }
+      postData(formData, "Subcategory added successfully");
       refetchSubCategory();
-      setEditingSubCategory(null);
-      setShowPopup(false);
+      setShowAddPopup(false);
     } catch (error) {
-      console.error("Error saving subcategory:", error);
-      auth.toastError("Failed to save subcategory");
+      console.error("Error adding subcategory:", error);
+      auth.toastError("Failed to add subcategory");
     }
   };
 
-  const handleEditSubCategory = (index) => {
-    setEditingSubCategory(index);
-    setShowPopup(true);
+  // Handle Update SubCategory
+  const handleUpdateSubCategory = async () => {
+    if (!editingSubCategory || !name || !image) {
+      auth.toastError("Please fill in all fields.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("category_id", categoryId);
+    formData.append("name", name);
+    formData.append("image", image);
+
+    try {
+      await axios.put(
+        `https://marfaa-alex.com/api/admin/subCategory/update/${editingSubCategory.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${auth.user?.token || ""}`,
+          },
+        }
+      );
+      auth.toastSuccess("Subcategory updated successfully!");
+      refetchSubCategory();
+      setShowUpdatePopup(false);
+      setEditingSubCategory(null);
+    } catch (error) {
+      console.error("Error updating subcategory:", error);
+      auth.toastError("Failed to update subcategory");
+    }
   };
 
-  const confirmRemoveSubCategory = (index) => {
-    setSubcategoryToDelete(index);
+  const handleEditSubCategory = (subcategory) => {
+    setEditingSubCategory(subcategory);
+    setName(subcategory.name);
+    setImage(subcategory.image);
+    setShowUpdatePopup(true);
+  };
+
+  const confirmRemoveSubCategory = (subcategory) => {
+    setSubcategoryToDelete(subcategory);
     setDeletePopupVisible(true);
   };
 
-  const handleRemoveSubCategory = () => {
-    if (subcategoryToDelete !== null) {
-      const updatedSubCategories = subCategories.filter((_, i) => i !== subcategoryToDelete);
-      setSubCategories(updatedSubCategories);
-      setSubcategoryToDelete(null);
+  const handleRemoveSubCategory = async () => {
+    if (!subcategoryToDelete) return;
+  
+    const success = await deleteData(
+      `https://marfaa-alex.com/api/admin/subCategory/delete/${subcategoryToDelete.id}`,
+      `${subcategoryToDelete.name} deleted.`
+    );
+  
+    if (success) {
+      setSubCategories((prev) => prev.filter((sub) => sub.id !== subcategoryToDelete.id));
+      refetchSubCategory();
     }
+  
     setDeletePopupVisible(false);
-  };
-
-  const handleCancelDelete = () => {
-    setSubcategoryToDelete(null);
-    setDeletePopupVisible(false);
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result); // Store only one image
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   return (
-    <div className="px-4 py-6 bg-white h-screen">
+    <div className="px-4 py-6 bg-white min-h-screen">
       <div className="mb-4">
-        <i
-          onClick={handleGoBack}
-          className="fa-solid fa-arrow-left text-black text-4xl mb-10 cursor-pointer"
-        ></i>
+        <i onClick={handleGoBack} className="fa-solid fa-arrow-left text-black text-4xl mb-10 cursor-pointer"></i>
         <h2 className="text-3xl font-bold text-black">Edit Category:</h2>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      {/* Category Name & Image */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
           <label htmlFor="categoryName" className="block text-black font-semibold mb-2 text-xl">
             Name:
@@ -151,97 +156,55 @@ useEffect(() => {
             id="categoryName"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="w-full p-2 border rounded-md bg-gray-100 outline-none caret-black text-black text-1xl"
+            className="w-full p-3 border rounded-md bg-gray-100 outline-none caret-black text-black text-xl"
             placeholder="Enter category name"
           />
-            <div>
+        </div>
+
+        <div>
           <label htmlFor="categoryPhoto" className="block text-black font-semibold mb-2 text-xl">
             Background Photo:
           </label>
-          <div className="w-[80%] h-[140px] flex justify-center items-center bg-gray-100 relative">
-            <img src={image} alt="Category" className="h-full w-full object-center" />
-            <div className="absolute inset-0 bg-black opacity-50 "></div>
-            <label
-              htmlFor="fileInput"
-              className="absolute text-white bg-green px-7 py-2 rounded-3xl hover:bg-main focus:outline-none border-none cursor-pointer"
-            >
+          <div className="w-full h-[150px] flex justify-center items-center bg-gray-100 relative rounded-md overflow-hidden">
+            <img src={image} alt="Category" className="h-full w-full object-cover" />
+            <label htmlFor="fileInput" className="absolute text-white bg-green px-6 py-2 rounded-lg cursor-pointer">
               Change Image
             </label>
-            <input
-              type="file"
-              id="fileInput"
-              className="hidden"
-              onChange={(e)=>handleImageUpload(e)}
-              accept="image/*"
-            />
+            <input type="file" id="fileInput" className="hidden" onChange={(e) => setImage(e.target.files[0])} />
           </div>
         </div>
-          <div className="flex justify-between items-center mt-20">
-            <h2 className="text-2xl font-bold text-black">Sub Category</h2>
-            <button
-              onClick={() => setShowPopup(true)}
-              className="bg-main text-white px-8 py-2 rounded-md flex items-center justify-center border-none"
-            >
-              <i className="fa-solid fa-plus mr-2"></i>
-            </button>
-          </div>
-        </div>
-      
       </div>
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold text-black">Added SubCategories:</h2>
-        {subCategories.length > 0 ? (
-          subCategories.map((subCategory, index) => (
-            <div key={index} className="flex items-center gap-7 mt-3">
-              <div className="flex justify-between bg-gray2 items-center w-[90%] p-2">
-                <img src={subCategory.image} alt="Subcategory" className="h-12 w-12 object-cover rounded-md" />
-                <p className="ml-4 text-black">{subCategory.name}</p>
+
+      {/* Subcategories List */}
+      <div className="mt-10">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold text-black">Sub Category</h2>
+          <button onClick={() => setShowAddPopup(true)} className="bg-main text-white px-6 py-2 rounded-md">
+            <i className="fa-solid fa-plus mr-2"></i> Add
+          </button>
+        </div>
+
+        <div className="mt-6 space-y-4">
+          {subCategories.length > 0 ? (
+            subCategories.map((subcategory) => (
+              <div key={subcategory.id} className="flex items-center gap-4 bg-gray-100 p-3 rounded-md">
+                <img src={subcategory.image} alt="Subcategory" className="h-12 w-12 object-cover rounded-md" />
+                <p className="text-black flex-1">{subcategory.name}</p>
+                <i className="fa-solid fa-edit text-gray-900 text-xl cursor-pointer" onClick={() => handleEditSubCategory(subcategory)}></i>
+                <i className="fa-solid fa-trash text-red-500 text-xl cursor-pointer" onClick={handleRemoveSubCategory}></i>
               </div>
-              <i
-                className="fa-solid fa-edit text-gray-900 text-xl cursor-pointer"
-                onClick={() => handleEditSubCategory(index)}
-              ></i>
-              <i
-                className="fa-solid fa-trash text-red-500 text-xl cursor-pointer"
-                onClick={() => confirmRemoveSubCategory(index)}
-              ></i>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-500">No subcategories added yet</p>
-        )}
-      </div>
-      {showPopup && (
-      <Show_add_category
-      value={editingSubCategory !== null ? subCategories[editingSubCategory].name : ""}
-      onClose={() => setShowPopup(false)}
-      onAddCategory={handleAddOrUpdateSubCategory}
-      previousImage={editingSubCategory !== null ? subCategories[editingSubCategory].image : ""}
-    />
-      )}
-      {deletePopupVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-md text-center">
-            <p className="text-lg text-black mb-4">
-              Are you sure you want to delete this Subcategory?
-            </p>
-            <div className="flex justify-center gap-4">
-              <button
-                onClick={handleRemoveSubCategory}
-                className="bg-red-500 text-white px-4 py-2 rounded-md"
-              >
-                Yes, Remove It
-              </button>
-              <button
-                onClick={handleCancelDelete}
-                className="bg-gray-300 text-black px-4 py-2 rounded-md"
-              >
-                No
-              </button>
-            </div>
-          </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No subcategories added yet</p>
+          )}
         </div>
-      )}
+      </div>
+
+      {/* Add Popup */}
+      {showAddPopup && <Show_add_category onClose={() => setShowAddPopup(false)} onAddCategory={handleAddSubCategory} />}
+
+      {/* Update Popup */}
+      {showUpdatePopup && <Show_add_category onClose={() => setShowUpdatePopup(false)} onAddCategory={handleUpdateSubCategory} value={name} previousImage={image} />}
     </div>
   );
 };

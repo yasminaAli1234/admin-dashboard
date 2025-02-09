@@ -33,62 +33,36 @@ const User = () => {
 
       {/* Dropdown for small screens */}
       {isDropdownOpen && (
-      <div className="flex justify-between">
-          <div className="lg:hidden mt-2 space-y-2 absolute bg-white  w-[35%] ">
-          <h3
-            onClick={() => handleChangePage(<Accepted />, "accepted")}
-            className={`cursor-pointer pb-2 ${active === "accepted" ? "border-b-4 border-black" : ""}`}
-          >
-            Accepted
-          </h3>
-          <h3
-            onClick={() => handleChangePage(<Pending />, "pending")}
-            className={`cursor-pointer pb-2 ${active === "pending" ? "border-b-4 border-black" : ""}`}
-          >
-            Pending
-          </h3>
-          <h3
-            onClick={() => handleChangePage(<Rejected />, "rejected")}
-            className={`cursor-pointer pb-2 ${active === "rejected" ? "border-b-4 border-black" : ""}`}
-          >
-            Rejected
-          </h3>
-          <h3
-            onClick={() => handleChangePage(<Suspending />, "suspending")}
-            className={`cursor-pointer pb-2 ${active === "suspending" ? "border-b-4 border-black" : ""}`}
-          >
-            Suspending
-          </h3>
-        </div>
-          <div className="lg:hidden mt-2 space-y-2 absolute bg-white  w-[35%] ">
-          <h3
-            onClick={() => handleChangePage(<Accepted />, "accepted")}
-            className={`cursor-pointer pb-2 ${active === "accepted" ? "border-b-4 border-black" : ""}`}
-          >
-            Accepted
-          </h3>
-          <h3
-            onClick={() => handleChangePage(<Pending />, "pending")}
-            className={`cursor-pointer pb-2 ${active === "pending" ? "border-b-4 border-black" : ""}`}
-          >
-            Pending
-          </h3>
-          <h3
-            onClick={() => handleChangePage(<Rejected />, "rejected")}
-            className={`cursor-pointer pb-2 ${active === "rejected" ? "border-b-4 border-black" : ""}`}
-          >
-            Rejected
-          </h3>
-          <h3
-            onClick={() => handleChangePage(<Suspending />, "suspending")}
-            className={`cursor-pointer pb-2 ${active === "suspending" ? "border-b-4 border-black" : ""}`}
-          >
-            Suspending
-          </h3>
-        </div>
-        <i className="fa fa-filter text-black "></i>
-      </div>
-      )}
+  <div className="fixed inset-0 z-50 flex items-start justify-end p-4 bg-black bg-opacity-50" onClick={() => setIsDropdownOpen(false)}>
+    <div className="bg-white rounded-lg shadow-lg w-1/3 p-4" onClick={(e) => e.stopPropagation()}>
+      <h3
+        onClick={() => handleChangePage(<Accepted />, "accepted")}
+        className={`cursor-pointer p-3 rounded-lg ${active === "accepted" ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"}`}
+      >
+        Accepted
+      </h3>
+      <h3
+        onClick={() => handleChangePage(<Pending />, "pending")}
+        className={`cursor-pointer p-3 rounded-lg ${active === "pending" ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"}`}
+      >
+        Pending
+      </h3>
+      <h3
+        onClick={() => handleChangePage(<Rejected />, "rejected")}
+        className={`cursor-pointer p-3 rounded-lg ${active === "rejected" ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"}`}
+      >
+        Rejected
+      </h3>
+      <h3
+        onClick={() => handleChangePage(<Suspending />, "suspending")}
+        className={`cursor-pointer p-3 rounded-lg ${active === "suspending" ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"}`}
+      >
+        Suspending
+      </h3>
+    </div>
+  </div>
+)}
+
 
       {/* Tabs for larger screens */}
       <div className="hidden lg:flex items-center gap-10 text-xl border-b">

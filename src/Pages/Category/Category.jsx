@@ -19,6 +19,13 @@ const Category = () => {
   const [image, setImage] = useState(null);
   const { deleteData, loadingDelete, responseDelete } = useDelete();
   const [categories, setCategories] = useState([]);
+
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [editingCategory, setEditingCategory] = useState(null);
+  const [updatedName, setUpdatedName] = useState("");
+  const [updatedImage, setUpdatedImage] = useState(null);
+  
+
   const auth= useAuth()
   const { postData, loadingPost, response } = usePost({
     url: `https://marfaa-alex.com/api/admin/add/category`,
@@ -53,6 +60,23 @@ const Category = () => {
     }
   };
   
+  const handleUpdateCategoryClick = (category) => {
+    setEditingCategory(category);
+    setUpdatedName(category.name);
+    setUpdatedImage(category.image);
+    setShowUpdateModal(true);
+  };
+  
+  const handleImageUpdate = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUpdatedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
     // Function to handle form submission and add category
     const handleSubmit = () => {
@@ -68,6 +92,41 @@ const Category = () => {
     postData(formData,'data added successful')
     };
 
+
+    const handleUpdateCategory = async () => {
+      if (!editingCategory) return;
+    
+      try {
+        const formData = new FormData();
+        formData.append("name", updatedName);
+        if (updatedImage) formData.append("image", updatedImage); // Only if new image is provided
+    
+        const response = await fetch(
+          `https://marfaa-alex.com/api/admin/category/update/${editingCategory.id}`,
+          {
+            method: "PUT", // Try "POST" if PUT doesn't work
+            headers: {
+              Authorization: `Bearer ${auth.user?.token || ""}`,
+            },
+            body: formData,
+          }
+        );
+    
+        const result = await response.json();
+        if (response.ok) {
+          auth.toastSuccess("Category updated successfully!");
+          setShowUpdateModal(false);
+          refetchCategory();
+        } else {
+          console.error("Server Error:", result);
+          auth.toastError(result.message || "Failed to update category");
+        }
+      } catch (error) {
+        console.error("Error updating category:", error);
+        auth.toastError("Something went wrong. Please try again.");
+      }
+    };
+    
 
      // Delete Customer
      const handleDelete = async (id, name) => {
@@ -107,12 +166,17 @@ const Category = () => {
   //   });
   // };
    // Handle click for navigating to Add Category page
-   const handleUpdateCategoryClick = (category) => {
+
+
+   const handleCategoryClick = (category) => {
     // Navigate to the update page and pass the item data as state
     navigate(`/category/update`, {
       state: { category },
     });
   };
+
+
+
   // Handle click for toggling to Update Category view
   // const handleUpdateCategoryClick = (id) => {
   //   setCurrentCategoryId(id); // Set the category ID to update
@@ -152,8 +216,9 @@ const Category = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-y-4">
   {categories.map((category, index) => (
   <div 
+  onClick={()=>handleCategoryClick(category)}
     key={index} 
-    className="w-40 h-40 flex flex-col justify-between items-center p-4 rounded-md bg-cover bg-center"
+    className="w-40 h-40 flex cursor-pointer flex-col justify-between items-center p-4 rounded-md bg-cover bg-center"
     style={{ backgroundImage: `url(${category.image})` }}
   >
     <h2 className="text-green font-bold text-center">{category.name}</h2>
@@ -244,6 +309,50 @@ const Category = () => {
           </div>
         </div>
       )}
+
+      {/* show update  */}
+
+      {showUpdateModal && (
+  <div className="fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50">
+    <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+      <h3 className="text-main text-xl font-semibold mb-6 text-center">Update Category</h3>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-2">Category Name</label>
+        <input
+          type="text"
+          value={updatedName}
+          onChange={(e) => setUpdatedName(e.target.value)}
+          className="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2"
+        />
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-2">Category Image</label>
+        <input
+          type="file"
+          onChange={handleImageUpdate}
+          className="w-full p-3 border-2 border-gray-300 rounded-md cursor-pointer"
+        />
+        {updatedImage && (
+          <div className="mt-4">
+            <img src={updatedImage} alt="Updated" className="w-full h-20 object-cover rounded-md" />
+          </div>
+        )}
+      </div>
+
+      <div className="flex justify-between">
+        <button onClick={() => setShowUpdateModal(false)} className="bg-gray-300 text-black px-4 py-2 rounded-md">
+          Cancel
+        </button>
+        <button onClick={handleUpdateCategory} className="bg-main text-white px-4 py-2 rounded-md">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
     </div>
   );

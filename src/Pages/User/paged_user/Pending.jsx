@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useGet } from '../../../Hooks/useGet';
 import axios from 'axios';
 import { useAuth } from '../../../Context/Auth';
+import Loading from '../../../components/Loading';
 const Pending = () => {
   const [data, setData] = useState([]);
   const auth = useAuth()
@@ -106,79 +107,85 @@ const Pending = () => {
     }
   };
   
+  if(loadingPending){
+    return(
+     <Loading/>
+    )
+  }
   
 
   return (
     <div className="text-black p-6 min-h-screen flex flex-col items-center">
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-7xl">
-    {Pending.map((item) => (
-      <div key={item.id} className="border p-4 rounded-lg shadow-lg bg-white flex flex-col">
-        {/* Product and User Info */}
-        <div className="flex items-center gap-4">
-          <img
-            src={item.image}
-            alt={item.first_name}
-            className="w-24 h-24 rounded-md object-cover"
-          />
-          <div className="flex flex-col">
-            <span className="text-lg font-semibold">{item.productName}</span>
-            <span className="text-gray-500">by {item.userName}</span>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-7xl">
+      {Pending.map((item) => (
+        <div key={item.id} className="border p-4 rounded-lg shadow-lg bg-white flex flex-col">
+          {/* Product and User Info */}
+          <div className="flex items-center gap-4 min-w-0">
+            <img
+              src={item.image}
+              alt={item.first_name}
+              className="w-24 h-24 rounded-md object-cover"
+            />
+            <div className="flex flex-col min-w-0">
+              <span className="text-lg font-semibold truncate">{item.productName}</span>
+              <span className="text-gray-500 truncate">by {item.userName}</span>
+            </div>
+          </div>
+  
+          {/* Registration Date */}
+          <div className="mt-4">
+            <span className="text-gray-600">Registration Date:</span>
+            <div className="font-bold truncate">{item.registrationDate}</div>
+          </div>
+  
+          {/* Contact Info */}
+          <div className="mt-4 flex flex-wrap gap-4">
+            <div className="min-w-0">
+              <span className="text-gray-600">Phone:</span>
+              <div className="font-medium truncate">{item.phone}</div>
+            </div>
+            <div className="min-w-0">
+              <span className="text-gray-600">Email:</span>
+              <div className="font-medium truncate">{item.email}</div>
+            </div>
+          </div>
+  
+          {/* Gallery and Location */}
+          <div className="mt-4 border-t pt-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex gap-2 flex-wrap">
+              {item.testproducts.map((galleryItem, index) => (
+                <div key={index} className="flex flex-col items-center min-w-0">
+                  <img src={galleryItem.img} alt="Gallery item" className="w-12 h-12 rounded-md" />
+                  <span className="text-xs text-gray-500 truncate">{galleryItem.describtion}</span>
+                </div>
+              ))}
+            </div>
+            <div className="min-w-0">
+              <span className="text-gray-600">Location:</span>
+              <div className="font-medium truncate">{item.full_address}</div>
+            </div>
+          </div>
+  
+          {/* Action Buttons */}
+          <div className="mt-6 flex justify-between">
+            <button
+              onClick={() => handleReject(item.id)}
+              className="px-4 py-2 border text-black rounded-md bg-transparent border-none font-bold hover:text-red-600"
+            >
+              Reject
+            </button>
+            <button
+              onClick={() => handleApprove(item.id)}
+              className="px-4 py-2 border border-green-500 text-white bg-green-500 rounded-md hover:bg-green-600"
+            >
+              Approve
+            </button>
           </div>
         </div>
-
-        {/* Registration Date */}
-        <div className="mt-4">
-          <span className="text-gray-600">Registration Date:</span>
-          <div className="font-bold">{item.registrationDate}</div>
-        </div>
-
-        {/* Contact Info */}
-        <div className="mt-4 flex flex-wrap gap-4">
-          <div>
-            <span className="text-gray-600">Phone:</span>
-            <div className="font-medium">{item.phone}</div>
-          </div>
-          <div>
-            <span className="text-gray-600">Email:</span>
-            <div className="font-medium">{item.email}</div>
-          </div>
-        </div>
-
-        {/* Gallery and Location */}
-        <div className="mt-4 border-t pt-4 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex gap-2 flex-wrap">
-            {item.testproducts.map((galleryItem, index) => (
-              <div key={index} className="flex flex-col items-center">
-                <img src={galleryItem.img} alt="Gallery item" className="w-12 h-12 rounded-md" />
-                <span className="text-xs text-gray-500">{galleryItem.describtion}</span>
-              </div>
-            ))}
-          </div>
-          <div>
-            <span className="text-gray-600">Location:</span>
-            <div className="font-medium">{item.full_address}</div>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="mt-6 flex justify-between">
-          <button
-            onClick={() => handleReject(item.id)}
-            className="px-4 py-2 border text-black rounded-md bg-transparent border-none font-bold hover:text-red-600"
-          >
-            Reject
-          </button>
-          <button
-            onClick={() => handleApprove(item.id)}
-            className=" py-2 border border-green-500 text-white bg-green rounded-md hover:bg-green-600"
-          >
-            Approve
-          </button>
-        </div>
-      </div>
-    ))}
+      ))}
+    </div>
   </div>
-</div>
+  
 
   );
 };

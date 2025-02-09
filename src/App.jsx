@@ -23,6 +23,7 @@ import SimpleLayout from './layouts/Simplelayout'
 import { ContextProvider } from './Context/Auth'
 import Login from './Pages/Authentication/Login'
 import Settings from './Pages/Settings'
+import UpdateUser from './Pages/User/paged_user/UpdateUser'
 
 const App = () => {
   return (
@@ -40,6 +41,8 @@ const App = () => {
   <Route path="/" element={<SimpleLayout><Login /></SimpleLayout>} />
   {/* User Routes */}
   <Route path="/user" element={<MainLayout><User /></MainLayout>} />
+  <Route path="/update_user/:id" element={<MainLayout><UpdateUser /></MainLayout>} />
+
   <Route path ="/user/info" element={<MainLayout><Show_info_user/></MainLayout>}></Route>
   {/* Product Routes */}
   <Route path="/product" element={<MainLayout><Product /></MainLayout>} />
