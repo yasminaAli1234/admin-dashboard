@@ -4,6 +4,7 @@ import { usePost } from '../../Hooks/usePostJson';
 import { useAuth } from '../../Context/Auth';
 import { useGet } from '../../Hooks/useGet';
 import { useDelete } from '../../Hooks/useDelete';
+import Loading from '../../components/Loading';
 
 const Category = () => {
   const navigate = useNavigate();
@@ -88,8 +89,10 @@ const Category = () => {
     }
     const formData= new FormData();
     formData.append("name",categoryName)
-    formData.append("image",JSON.stringify(image))
-    postData(formData,'data added successful')
+    formData.append("image",image)
+    postData(formData,'data added successful').then(()=>setShowModal(false)).then(()=>refetchCategory())
+    setCategoryName('')
+    setImage('')
     };
 
 
@@ -100,7 +103,8 @@ const Category = () => {
         const formData = new FormData();
         formData.append("name", updatedName);
         if (updatedImage) formData.append("image", updatedImage); // Only if new image is provided
-    
+
+        
         const response = await fetch(
           `https://marfaa-alex.com/api/admin/category/update/${editingCategory.id}`,
           {
@@ -175,7 +179,9 @@ const Category = () => {
     });
   };
 
-
+if(loadingCategory){
+  return <Loading/>
+}
 
   // Handle click for toggling to Update Category view
   // const handleUpdateCategoryClick = (id) => {
@@ -192,52 +198,64 @@ const Category = () => {
   return (
     <div className="bg-white ">
       
-        <div className="px-4 py-6 h-screen">
-          {/* Header Section */}
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-black">Category</h2>
-            <button
-              onClick={() => setShowModal(true)}
-              className="bg-main text-white px-8 py-2 rounded-md flex items-center justify-center"
+      <div className="px-6 py-8 min-h-screen bg-gray-50">
+      {/* Header Section */}
+      <div className="flex flex-col lg:flex-row gap-2 justify-between  items-center mb-8">
+        <h2 className="text-3xl font-bold text-gray-900">Categories</h2>
+        <button
+          onClick={() => setShowModal(true)}
+          className="bg-green hover:bg-main text-white px-6 py-3 rounded-lg flex items-center justify-center transition duration-300"
+        >
+          <i className="fa-solid fa-plus mr-2"></i> Add Category
+        </button>
+      </div>
+
+      {/* Category List */}
+      {categories.length === 0 ? (
+        <h2 className="text-center text-xl text-gray-600">
+          No categories exist yet.
+        </h2>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {categories.map((category, index) => (
+            <div
+              key={index}
+              className="relative group cursor-pointer overflow-hidden rounded-xl shadow-md transition-transform transform hover:scale-105"
+              onClick={() => handleCategoryClick(category)}
             >
-              <i className="fa-solid fa-plus mr-2"></i> 
-            </button>
-          </div>
+              <div
+                className="h-48 bg-cover bg-center rounded-xl flex flex-col justify-between items-center p-4"
+                style={{ backgroundImage: `url(${category.image})` }}
+              >
+                <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all"></div>
+                
+                <h2 className="relative text-white font-semibold text-lg text-center z-10">
+                  {category.name}
+                </h2>
 
-          {/* Category List */}
-
-   
-
-          {categories.length === 0 ? (
-          <h2 className="text-center text-xl text-gray-600">
-            no category exist yet
-          </h2>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-y-4">
-  {categories.map((category, index) => (
-  <div 
-  onClick={()=>handleCategoryClick(category)}
-    key={index} 
-    className="w-40 h-40 flex cursor-pointer flex-col justify-between items-center p-4 rounded-md bg-cover bg-center"
-    style={{ backgroundImage: `url(${category.image})` }}
-  >
-    <h2 className="text-green font-bold text-center">{category.name}</h2>
-    <div className="flex gap-3">
-      <i
-        onClick={() => handleUpdateCategoryClick(category)}
-        className="fa-solid fa-edit text-green text-xl cursor-pointer"
-      ></i>
-      <i
-        onClick={() => handleDelete(category.id,category.name)}
-        className="fa-solid fa-trash text-red-600 text-xl cursor-pointer"
-      ></i>
-    </div>
-  </div>
-))}
-
-          </div>
-        )}
+                {/* Action Icons */}
+                <div className="relative z-10 flex gap-4">
+                  <i
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleUpdateCategoryClick(category);
+                    }}
+                    className="fa-solid fa-edit text-white text-xl cursor-pointer hover:text-blue-400"
+                  ></i>
+                  <i
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(category.id, category.name);
+                    }}
+                    className="fa-solid fa-trash text-white text-xl cursor-pointer hover:text-red-500"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
+      )}
+    </div>
 
              {/* Add Category Modal */}
       {showModal && (

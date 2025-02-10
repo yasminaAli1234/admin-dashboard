@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGet } from '../../Hooks/useGet';
+import ProductView from '../../Pages/Product/ProductView';
+import Loading from '../Loading';
 
 const Table = () => {
   const { refetch: refetchProduct, loading: loadingProduct, data: dataProduct } = useGet({ url: 'https://marfaa-alex.com/api/admin/products'});
@@ -114,9 +116,6 @@ const Table = () => {
     );
   };
 
-  const handleViewAction = (product) => {
-    alert(`View product details for ${product.product_name}`);
-  };
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -126,6 +125,19 @@ const Table = () => {
     }
   };
 
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleViewAction = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const closePopup = () => {
+    setSelectedProduct(null);
+  };
+
+  if(loadingProduct){
+    return(<>{<Loading/>}</>)
+  }
   return (
     <div className="p-4">
       {/* Search Input */}
@@ -150,79 +162,65 @@ const Table = () => {
 
       {/* Scrollable container for the table */}
       <div className="overflow-x-auto">
-        <table className="overflow-x-auto min-w-full bg-white shadow-md rounded-lg">
-          <thead className="bg-green border-b ">
-            <tr>
-              <th className="py-3 px-4 text-left">
-                <input
-                  type="checkbox"
-                  onChange={handleSelectAll}
-                  checked={selectedItems.length === data.length && data.length > 0}
-                  className="form-checkbox text-indigo-700 border-none w-6 h-6"
-                />
-              </th>
-              <th className="py-3 px-2 uppercase">Image</th>
-              <th className="py-3 px-2 uppercase">Prod. Name</th>
-              <th className="py-3 px-2 uppercase">Seller Name</th>
-              <th className="py-3 px-2 uppercase">Type</th>
-              <th className="py-3 px-2 uppercase">Amount</th>
-              <th className="py-3 px-2 uppercase">Submission Time</th>
-              <th className="py-3 px-2 uppercase">Status</th>
-              <th className="py-3 px-2 uppercase">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.length > 0 ? (
-              data.map((item, index) => (
-                <tr key={index} className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="py-3 px-4">
-                    <input
-                      type="checkbox"
-                      checked={selectedItems.includes(index)}
-                      onChange={() => handleCheckboxChange(index)}
-                      className="form-checkbox text-indigo-600 w-6 h-5 outline-none border-none"
-                    />
-                  </td>
-                  <td className="py-3 px-4">
-                    <img
-                      src={item.image}
-                      alt={item.productTitle}
-                      className="w-10 h-10 object-cover rounded"
-                    />
-                  </td>
-                  <td className="py-3 text-black px-4">{item.productTitle}</td>
-                  <td className="py-3 text-black px-4">{item.productDescription}</td>
-                  <td className="py-3 text-black px-4">{item.type}</td>
-                  <td className="py-3 text-black px-4 font-bold">${item.productPrice}</td>
-                  <td className="py-3 text-black px-4">
-                    {new Date(item.date_submitted).toLocaleString()}
-                  </td>
-                  <td className="py-3 text-black px-4">
-                    <span className="px-3 py-1 rounded-full text-main text-lg">
-                      {item.status}
-                    </span>
-                  </td>
-                  <td className="py-3 px-3">
-                    <button
-                      onClick={() => handleViewAction(item)}
-                      className="px-4 bg-transparent py-2 text-sm text-black rounded flex items-center gap-3 border-none"
-                    >
-                      View
-                      <i className="fa-solid fa-arrow-right text-xl"></i>
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="9" className="text-center py-5 text-gray-500">
-                  No data found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+    
+  <table className="min-w-full bg-white shadow-md rounded-lg border">
+    <thead className="bg-green text-white">
+      <tr>
+        <th className="py-3 px-4 uppercase text-left">Image</th>
+        <th className="py-3 px-4 uppercase text-left">Product Name</th>
+        <th className="py-3 px-4 uppercase text-left">Category</th>
+        <th className="py-3 px-4 uppercase text-left">Subcategory</th>
+        <th className="py-3 px-4 uppercase text-left">Price</th>
+        <th className="py-3 px-4 uppercase text-left">Seller</th>
+        <th className="py-3 px-4 uppercase text-left">Status</th>
+        <th className="py-3 px-4 uppercase text-left">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Product.length > 0 ? (
+        Product.map((item, index) => (
+          <tr key={index} className="border-b border-gray-200 hover:bg-gray-50">
+            <td className="py-3 px-4">
+              <img
+                src={item.productImages?.images?.[0]?.image || "/placeholder.png"} 
+                alt={item.product_name}
+                className="w-14 h-14 object-cover rounded-lg"
+              />
+            </td>
+            <td className="py-3 text-black px-4">{item.product_name}</td>
+            <td className="py-3 text-black px-4">{item.category.category_name}</td>
+            <td className="py-3 text-black px-4">{item.subCategory.subCategory_name}</td>
+            <td className="py-3 text-black px-4 font-bold">${item.product_price}</td>
+            <td className="py-3 text-black px-4">{item.user.user_name}</td>
+            <td className="py-3 text-black px-4">
+              <span className="px-3 py-1 rounded-full bg-gray-200 text-black text-sm">
+                {item.product_status}
+              </span>
+            </td>
+            <td className="py-3 px-4">
+              <button
+                onClick={() => handleViewAction(item)}
+                className="px-4 py-2 text-sm font-semibold text-green-600 border border-green-600 rounded-lg hover:bg-green-600 hover:text-green transition duration-200 flex items-center gap-2"
+              >
+                View <i className="fa-solid fa-arrow-right text-lg"></i>
+              </button>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="8" className="text-center py-5 text-gray-500">
+            No data found
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+
+
+
+      {selectedProduct && <ProductView product={selectedProduct} closePopup={closePopup} />}
+    </div>
     </div>
   );
 };

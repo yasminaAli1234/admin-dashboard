@@ -3,6 +3,7 @@ import { useDelete } from "../Hooks/useDelete";
 import { useGet } from "../Hooks/useGet";
 import { usePost } from "../Hooks/usePostJson";
 import { useAuth } from "../Context/Auth";
+import Loading from "../components/Loading";
 
 const Settings = () => {
   const [tab, setTab] = useState(0);
@@ -18,8 +19,8 @@ const Settings = () => {
 
   const { deleteData: deleteCity } = useDelete();
   const { deleteData: deleteArea } = useDelete();
-  const { refetch: refetchCity, data: dataCity } = useGet({ url: "https://marfaa-alex.com/api/admin/cities" });
-  const { refetch: refetchArea, data: dataArea } = useGet({ url: "https://marfaa-alex.com/api/admin/areas" });
+  const { refetch: refetchCity,loading:loadingCity, data: dataCity } = useGet({ url: "https://marfaa-alex.com/api/admin/cities" });
+  const { refetch: refetchArea,loading:loadingArea, data: dataArea } = useGet({ url: "https://marfaa-alex.com/api/admin/areas" });
   const { postData: postCity } = usePost({ url: `https://marfaa-alex.com/api/admin/add/city` });
   const { postData: postArea } = usePost({ url: `https://marfaa-alex.com/api/admin/add/area` });
 
@@ -123,6 +124,13 @@ const Settings = () => {
     }
   };
 
+  if(loadingArea){
+    return <Loading/>
+  }
+  if(loadingCity){
+    return <Loading/>
+  }
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="flex justify-center space-x-4 mb-4">
@@ -139,17 +147,31 @@ const Settings = () => {
           <button className="bg-green-500 bg-green text-white px-4 py-2 rounded" onClick={() => setShowAddPopup(true)}>
             Add City
           </button>
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {city.map((c) => (
-              <div key={c.id} className="p-4 border rounded shadow">
-                <h3 className="font-bold">{c.name}</h3>
-                <div className="mt-2 flex space-x-2">
-                  <button className="text-green" onClick={() => { setEditCityId(c.id); setCityName(c.name); }}>Edit</button>
-                  <button className="text-red-500" onClick={() => handleDeleteCity(c.id, c.name)}>Delete</button>
-                </div>
-              </div>
-            ))}
-          </div>
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  {city.map((c) => (
+    <div 
+      key={c.id} 
+      className="p-5 border border-gray-200 rounded-lg shadow-md bg-white transition-transform hover:scale-[1.02]"
+    >
+      <h3 className="font-semibold text-lg text-gray-800">{c.name}</h3>
+      <div className="mt-3 flex space-x-4">
+        <button 
+          className="px-3 py-1 text-white bg-green bg-green-600 hover:bg-green-700 rounded-md text-sm transition duration-200"
+          onClick={() => { setEditCityId(c.id); setCityName(c.name); }}
+        >
+          Edit
+        </button>
+        <button 
+          className="px-3 py-1 text-white bg-red-500 hover:bg-red-600 rounded-md text-sm transition duration-200"
+          onClick={() => handleDeleteCity(c.id, c.name)}
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
         </div>
       )}
 
@@ -158,18 +180,33 @@ const Settings = () => {
           <button className="bg-green-500 bg-green text-white px-4 py-2 rounded" onClick={() => setShowAddPopup(true)}>
             Add Area
           </button>
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {area.map((a) => (
-              <div key={a.id} className="p-4 border rounded shadow">
-                <h3 className="font-bold">{a.name}</h3>
-                <p className="text-gray-500">City: {city.find((c) => c.id === a.city_id)?.name || "Unknown"}</p>
-                <div className="mt-2 flex space-x-2">
-                  <button className="text-green" onClick={() => { setEditAreaId(a.id); setAreaName(a.name); setSelectedCity(a.city_id); }}>Edit</button>
-                  <button className="text-red-500" onClick={() => handleDeleteArea(a.id, a.name)}>Delete</button>
-                </div>
-              </div>
-            ))}
-          </div>
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  {area.map((a) => (
+    <div 
+      key={a.id} 
+      className="p-5 border border-gray-200 rounded-lg shadow-md bg-white transition-transform hover:scale-[1.02]"
+    >
+      <h3 className="font-semibold text-lg text-gray-800">{a.name}</h3>
+      <p className="text-gray-500 text-sm">City: {city.find((c) => c.id === a.city_id)?.name || "Unknown"}</p>
+      
+      <div className="mt-3 flex space-x-4">
+        <button 
+          className="px-3 py-1 text-white bg-green hover:bg-main rounded-md text-sm transition duration-200"
+          onClick={() => { setEditAreaId(a.id); setAreaName(a.name); setSelectedCity(a.city_id); }}
+        >
+          Edit
+        </button>
+        <button 
+          className="px-3 py-1 text-white bg-red-500 hover:bg-red-600 rounded-md text-sm transition duration-200"
+          onClick={() => handleDeleteArea(a.id, a.name)}
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
         </div>
       )}
 

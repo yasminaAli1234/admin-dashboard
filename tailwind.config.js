@@ -13,7 +13,7 @@ export default {
         gray2:"#F2F2F2",
         custom_green:'#09817803',
         custom_white: '#FFFFFF',
-
+        
         
       },
     },

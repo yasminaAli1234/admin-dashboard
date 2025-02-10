@@ -57,7 +57,7 @@ const App = () => {
   <Route path="/category/update" element={<MainLayout><Update_category /></MainLayout>} /> {/* Include a parameter for the specific category */}
   
   {/* Selection and Sharing Routes */}
-  <Route path="/page_selection/:type" element={<SimpleLayout><Page_selection_category /></SimpleLayout>} />
+  <Route path="/page_selection/:type/:data" element={<SimpleLayout><Page_selection_category /></SimpleLayout>} />
   <Route path="/share_category" element={<SimpleLayout><ShareCategory /></SimpleLayout>} />
 </Routes>
         

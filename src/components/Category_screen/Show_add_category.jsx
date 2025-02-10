@@ -4,15 +4,17 @@ const Show_add_category = ({ value, onClose, onAddCategory, previousImage }) => 
   const [image, setImage] = useState(previousImage || null); // Use previous image if provided
   const [subCategoryName, setSubCategoryName] = useState(value);
 
-  // Handle image upload
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => setImage(reader.result); // Set the uploaded image
+      reader.onloadend = () => {
+        setImage(reader.result); // Convert file to Base64 and set state
+      };
       reader.readAsDataURL(file);
     }
   };
+  
 
   const handleAddCategory = () => {
     if (subCategoryName.trim() && image) {
