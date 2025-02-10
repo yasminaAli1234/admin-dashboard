@@ -135,6 +135,7 @@ const Update_category = () => {
       refetchSubCategory();
     }
   
+    
     setDeletePopupVisible(false);
   };
 

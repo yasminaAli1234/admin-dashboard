@@ -6,11 +6,11 @@ import Product from "../Pages/Product/Product";
 import Order from "../Pages/Order/Order";
 import User from "../Pages/User/User";
 import Category from "../Pages/Category/Category";
-import Image1 from "../assets/image1";
-import Image2 from "../assets/image2";
-import Image3 from "../assets/image3";
-import Image4 from "../assets/image4";
-import Image5 from "../assets/image5";
+import Image1 from "../assets/Image1";
+import Image2 from "../assets/Image2";
+import Image3 from "../assets/Image3";
+import Image4 from "../assets/Image4";
+import Image5 from "../assets/Image5";
 
 const Sidebar = () => {
   const location = useLocation(); // Get current location (path)
