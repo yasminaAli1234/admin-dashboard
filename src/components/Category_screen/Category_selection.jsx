@@ -7,9 +7,9 @@ import image3 from '../../assets/3jpg.jpg';
 const CategorySelection = ({items}) => {
   const navigate = useNavigate(); // Hook for navigation
 
-  const handleCategoryClick = (category,data) => {
+  const handleCategoryClick = (category,id) => {
     // Navigate to the respective category page
-    navigate(`/page_selection/${category}/${data}`);
+    navigate(`/page_selection/${category}/${id}`);
   };
 
   return (
@@ -22,7 +22,7 @@ const CategorySelection = ({items}) => {
         <div
           key={index}
           className="relative group cursor-pointer overflow-hidden rounded-xl shadow-md transition-transform transform hover:scale-105"
-          onClick={() => handleCategoryClick(category.name,category)}
+          onClick={() => handleCategoryClick(category.name,category.id)}
         >
           <img
             src={category.image}

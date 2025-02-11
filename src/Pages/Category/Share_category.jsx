@@ -8,11 +8,15 @@ const ShareCategory = () => {
   const [image, setImage] = useState(null); // State to store uploaded image
   const uploadRef = useRef(null); // Reference for file input
 
+ 
   const location = useLocation();
-  const { item, type, image_category,category,item_sub } = location.state; // Retrieve the state data
+  const { item, type, image_category, item_sub, id } = location.state || {}; 
+
+  console.log("Received state:", location.state); // Debugging
+
   const [selectedValue, setSelectedValue] = useState(""); // State to store selected value
   const [selectedButton, setSelectedButton] = useState("");
-  const [categoryId, setCategoryId] = useState(category?.id);
+
   const [subCategoryId, setSubCategoryId] = useState(item_sub?.id);
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState('');
@@ -26,6 +30,10 @@ const ShareCategory = () => {
   // const [successMessage, setSuccessMessage] = useState(""); // State for success message
   
   const [loading, setLoading] = useState(false); 
+  useEffect(() => {
+    console.log("category ", id)
+  }, [id])
+
   
 useEffect(() => {
 console.log("type",item)
@@ -76,16 +84,17 @@ console.log("type",item)
     
     const formData = new FormData()
 
-    formData.append('category_id',categoryId)
+    formData.append('category_id',Number(id))
     formData.append('subCategory_id',subCategoryId)
     formData.append('name',productName)
     formData.append('description',productDescription)
     formData.append('price',productPrice)
     formData.append('location',productLocation)
     formData.append('quantity',quantity)
-    formData.append('size',selectedSizes)
+    selectedSizes.forEach((size) => formData.append('size[]', size));
     formData.append('color',productColor)
     formData.append('images ',images)
+    formData.append('product_quality ',productQuality)
     formData.append('type ',selectedValue)
 
     postData(formData,"data added successful")
@@ -250,6 +259,8 @@ console.log("type",item)
       <div className="flex flex-col md:flex-row justify-between relative top-[80px] p-4 gap-3 bg-white">
         {/* Left Part: Box 400x450 */}
         <div className="w-full flex flex-col items-center">
+
+          {`category ${id}`}
       {/* File Input (Hidden) */}
       <input
         type="file"

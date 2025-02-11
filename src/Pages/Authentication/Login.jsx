@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useAuth } from "../../Context/Auth";
 import Loading from "../../components/Loading";
-
+import LoginLogo from "../../assets/LoginLogo";
+import logo from '../../assets/iconpng.png'
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -82,7 +83,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="bg-white p-10 shadow-2xl rounded-2xl w-full max-w-md">
-        <h2 className="text-4xl font-extrabold text-center text-mainColor">Login</h2>
+        <img className="w-[50%] h-40  flex justify-center items-center" src={logo} alt="" />
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
             <label className="block text-gray-700 font-semibold">Email</label>

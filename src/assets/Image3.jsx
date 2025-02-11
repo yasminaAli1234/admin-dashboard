@@ -1,12 +1,18 @@
 import React from 'react'
 
-const Image3 = () => {
+const Image3 = ({path}) => {
   return (
    <>
-   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17 4H7C5.89543 4 5 4.89543 5 6V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V6C19 4.89543 18.1046 4 17 4Z" stroke="black"/>
-<path d="M9 9H15M9 13H15M9 17H13" stroke="black" strokeLinecap="round"/>
+<svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  viewBox="0 0 24 24" 
+  fill="currentColor" 
+  width="24" 
+  height="24"
+>
+  <path d="M7 4h-2l-2 10h16l-2-10h-10zm10 12h-12v2h12v-2zm-2 4h-8v2h8v-2z"/>
 </svg>
+
 
    </>
   )

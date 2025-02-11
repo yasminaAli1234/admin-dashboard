@@ -174,7 +174,7 @@ const Category = () => {
 
    const handleCategoryClick = (category) => {
     // Navigate to the update page and pass the item data as state
-    navigate(`/category/update`, {
+    navigate(`/category/update/${category.id}`, {
       state: { category },
     });
   };

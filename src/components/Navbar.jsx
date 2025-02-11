@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context/Auth';
 
 const Navbar = () => {
   const [logout,setLogout] = useState(false);
   const navigate = useNavigate()
+  const auth = useAuth()
   const navigateTo=()=>{
     navigate("/login")
   }
+  const handleLogout = () => {
+    auth.logout();
+    navigate("/", { replace: true });
+}
   return (
     <div className="fixed top-0 right-0 w-full h-20 bg-back_ground flex items-center justify-end p-4 gap-4 ">
       {/* Create New Notification Button */}
@@ -34,7 +40,7 @@ const Navbar = () => {
           <span className="text-xs text-gray-700">Owner</span>
         </div>
         <i onClick={()=>{setLogout(pre=>!pre)}}  className="fa-solid fa-chevron-down text-black text-xl cursor-pointer"></i>
-        <div onClick={navigateTo} className={`logout w-[100%] h-[100%]  bg-white text-black border-b-2 text-xl  items-center justify-center absolute top-[100%] shadow-black right-10  ${logout?"flex":"hidden"} cursor-pointer`}>Logout</div>
+        <div onClick={handleLogout} className={`logout w-[100%] h-[100%]  bg-white text-black border-b-2 text-xl  items-center justify-center absolute top-[100%] shadow-black right-10  ${logout?"flex":"hidden"} cursor-pointer`}>Logout</div>
       </div>
 
     </div>

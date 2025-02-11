@@ -14,8 +14,10 @@ import { useGet } from '../../Hooks/useGet';
 import Loading from '../../components/Loading';
 
 const Page_selection_category = () => {
-  const { type } = useParams(); // Destructure the 'type' from the URL parameters
-  const { data } = useParams(); // Destructure the 'type' from the URL parameters
+  const { type, id } = useParams(); // Retrieve from URL
+
+  console.log("Received params:", type, id); // Debugging
+
   const { refetch: refetchSubCategory, loading: loadingSubCategory, data: subCategory } = useGet({
     url: `https://marfaa-alex.com/api/admin/subCategories`,
   });
@@ -54,7 +56,7 @@ const Page_selection_category = () => {
     <div className="bg-white h-screen flex flex-col justify-between">
       {/* Navbar */}
       <Navbar_category />
-      <Category_type data={subCategories} type={type} category= {data}/>
+      <Category_type data={subCategories} type={type} id= {id}/>
     </div>
   );
 };

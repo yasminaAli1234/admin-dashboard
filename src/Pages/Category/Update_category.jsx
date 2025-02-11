@@ -9,10 +9,13 @@ import { useDelete } from "../../Hooks/useDelete";
 const Update_category = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const [value, setValue] = useState("");
+  
+ 
   const [name, setName] = useState("");
+  
+  const [value, setValue] = useState("");
   const [image, setImage] = useState(null);
+  const [imageBase64, setImageBase64] = useState("");
   const [subCategories, setSubCategories] = useState([]);
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [categoryId, setCategoryId] = useState("");
@@ -141,6 +144,50 @@ const Update_category = () => {
   };
 
 
+    // Convert Image to Base64
+    const handleImageChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        setImage(URL.createObjectURL(file)); // Show preview
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => setImageBase64(reader.result);
+      }
+    };
+
+      // Handle Update Request
+  const handleUpdate = async () => {
+    if (!value.trim()) {
+      auth.toastError("Category name is required.");
+      return;
+    }
+
+    const data = {
+      name: value,
+      image: imageBase64 || image, // Send updated image if changed, else send existing one
+    };
+
+    try {
+      const response = await fetch(`https://marfaa-alex.com/api/admin/category/update/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${auth.user?.token || ''}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        auth.toastSucess("Category updated successfully!");
+      } else {
+        auth.toastError(result.message || "Failed to update category.");
+      }
+    } catch (error) {
+      console.error("Update failed:", error);
+      auth.toastError("An error occurred while updating.");
+    }
+  };
 
   
 
@@ -153,28 +200,40 @@ const Update_category = () => {
 
       {/* Category Name & Image */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        <div>
-          <label className="block text-black font-semibold mb-2 text-xl">Name:</label>
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            className="w-full p-3 border rounded-md bg-gray-100 outline-none caret-black text-black text-xl"
-            placeholder="Enter category name"
-          />
-        </div>
+      {/* Name Input */}
+      <div>
+        <label className="block text-black font-semibold mb-2 text-xl">Name:</label>
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          className="w-full p-3 border rounded-md bg-gray-100 outline-none caret-black text-black text-xl"
+          placeholder="Enter category name"
+        />
+      </div>
 
-        <div>
-          <label className="block text-black font-semibold mb-2 text-xl">Background Photo:</label>
-          <div className="w-full h-[150px] flex justify-center items-center bg-gray-100 relative rounded-md overflow-hidden">
-            {image && <img src={image? image : image} alt="Category" className="h-full w-full object-cover" />}
-            <label htmlFor="fileInput" className="absolute text-white bg-green px-6 py-2 rounded-lg cursor-pointer">
-              Change Image
-            </label>
-            <input type="file" id="fileInput" className="hidden" onChange={(e) => setImage(e.target.files[0])} />
-          </div>
+      {/* Image Upload */}
+      <div>
+        <label className="block text-black font-semibold mb-2 text-xl">Background Photo:</label>
+        <div className="w-full h-[150px] flex justify-center items-center bg-gray-100 relative rounded-md overflow-hidden">
+          {image && <img src={image} alt="Category" className="h-full w-full object-cover" />}
+          <label htmlFor="fileInput" className="absolute text-white bg-green px-6 py-2 rounded-lg cursor-pointer">
+            Change Image
+          </label>
+          <input type="file" id="fileInput" className="hidden" onChange={handleImageChange} />
         </div>
       </div>
+
+      {/* Update Button */}
+      <div className="col-span-2">
+        <button
+          onClick={handleUpdate}
+          className="bg-green text-white px-6 py-2 rounded-md text-xl w-fit"
+        >
+          Update
+        </button>
+      </div>
+    </div>
 
       {/* Subcategories List */}
       <div className="mt-10">
