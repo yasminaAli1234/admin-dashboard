@@ -89,7 +89,7 @@ const Login = () => {
             <label className="block text-gray-700 font-semibold">Email</label>
             <input
               type="email"
-              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-mainColor focus:border-mainColor transition"
+              className="w-full px-4 bg-white py-3 border ring-white rounded-xl focus:ring-2 focus:ring-mainColor focus:border-mainColor transition"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -100,7 +100,7 @@ const Login = () => {
             <label className="block text-gray-700 font-semibold">Password</label>
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-mainColor focus:border-mainColor transition"
+              className="w-full px-4 py-3 bg-white border ring-white rounded-xl focus:ring-2 focus:ring-mainColor focus:border-mainColor transition"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -115,18 +115,18 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-mainColor text-white bg-green py-3 rounded-xl font-semibold hover:bg-opacity-90 transition-all ease-in-out duration-200"
+            className="w-full bg-mainColor text-white bg-green py-3 rounded-xl font-semibold hover:bg-opacity-90  transition-all ease-in-out duration-200"
             disabled={isLoading}
           >
             {isLoading ? <Loading /> : "Login"}
           </button>
         </form>
-        <p className="mt-6 text-center text-gray-600 text-lg">
+        {/* <p className="mt-6 text-center text-gray-600 text-lg">
           Don't have an account?{" "}
           <Link to="/sign_agent" className="text-mainColor font-semibold hover:underline">
             Sign Up
           </Link>
-        </p>
+        </p> */}
       </div>
     </div>
   );
