@@ -89,7 +89,7 @@ const Login = () => {
             <label className="block text-gray-700 font-semibold">Email</label>
             <input
               type="email"
-              className="w-full px-4 bg-white py-3 border ring-white rounded-xl focus:ring-2 focus:ring-mainColor focus:border-mainColor transition"
+              className="w-full px-4 text-black bg-white py-3 border rounded-xl focus:ring-2 focus:ring-mainColor focus:border-mainColor transition"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -100,7 +100,7 @@ const Login = () => {
             <label className="block text-gray-700 font-semibold">Password</label>
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full px-4 py-3 bg-white border ring-white rounded-xl focus:ring-2 focus:ring-mainColor focus:border-mainColor transition"
+              className="w-full px-4 py-3 bg-white text-black border  rounded-xl focus:ring-2 focus:ring-mainColor focus:border-mainColor transition"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
