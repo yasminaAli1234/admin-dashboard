@@ -23,12 +23,13 @@ const ShareCategory = () => {
   const [quantity, setQuantity] = useState(0); // Initial value is set to 0
   const [productPrice, setProductPrice] = useState("");
   const [productLocation, setProductLocation] = useState('');
-  const [selectedSizes, setSelectedSizes] = useState([]); // Selected sizes
+  // const [selectedSizes, setSelectedSizes] = useState([]); // Selected sizes
   const [productColor, setProductColor] = useState(""); // Product color
   const [productQuality, setProductQuality] = useState("");  
   const [images, setImages] = useState([]); // Stores base64 images
   // const [successMessage, setSuccessMessage] = useState(""); // State for success message
   
+
   const [loading, setLoading] = useState(false); 
   useEffect(() => {
     console.log("category ", id)
@@ -66,14 +67,11 @@ console.log("type",item)
   // Handle Input Changes
   const handleInputChange = (setter) => (e) => setter(e.target.value);
 
-  // Handle Size Selection
-  const toggleSize = (size) => {
-    setSelectedSizes((prevSizes) =>
-      prevSizes.includes(size)
-        ? prevSizes.filter((s) => s !== size) // Remove if already selected
-        : [...prevSizes, size] // Add if not selected
-    );
-  };
+const [selectedSize, setSelectedSize] = useState(null); // Only one size can be selected
+
+const toggleSize = (size) => {
+  setSelectedSize((prevSize) => (prevSize === size ? null : size)); // Deselect if clicked again
+};
 
     const { postData, loadingPost, response } = usePost({
       url: `https://marfaa-alex.com/api/admin/add/product`,
@@ -82,29 +80,46 @@ console.log("type",item)
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    const formData = new FormData()
-
-    formData.append('category_id',Number(id))
-    formData.append('subCategory_id',subCategoryId)
-    formData.append('name',productName)
-    formData.append('description',productDescription)
-    formData.append('price',productPrice)
-    formData.append('location',productLocation)
-    formData.append('quantity',quantity)
-    selectedSizes.forEach((size) => formData.append('size[]', size));
-    formData.append('color',productColor)
-    formData.append('images ',images)
-    formData.append('product_quality ',productQuality)
-    formData.append('type ',selectedValue)
-
-    postData(formData,"data added successful")
-
-   
-
+    const formData = new FormData();
+  
+    formData.append('category_id', Number(id));
+    formData.append('subCategory_id', subCategoryId);
+    formData.append('name', productName);
+    formData.append('description', productDescription);
+    formData.append('price', productPrice);
+    formData.append('location', productLocation);
+    formData.append('quantity', quantity);
+    formData.append('size', selectedSize);
+    images.forEach((image) => {
+      formData.append("images[]", image); // Append each image separately
+    });
+    formData.append('product_quality', productQuality);
+    formData.append('type', selectedValue);
+  
+    postData(formData, "Data added successfully")
+      .then(() => {
+        // Reset the form fields directly
+        setProductName('');
+        setProductDescription('');
+        setProductPrice('');
+        setProductLocation('');
+        setQuantity('');
+        setSelectedSize(null);
+        setImages([]);
+        setProductQuality('');
+        setSelectedValue('');
+  
+        // Navigate to the /product page after successful post
+        navigate("/product");
+      })
+      .catch((error) => {
+        console.error("Error posting data:", error);
+        // Handle error (e.g., show an error message)
+      });
+  
     console.log("Product Data:", formData);
-
-    // setTimeout(() => setLoading(false), 2000); // Simulate API call
   };
+  
 
   // useEffect(() => {
   //   return () => {
@@ -405,25 +420,25 @@ console.log("type",item)
       </div>
 
       {/* Size Selection */}
-      <div className="flex flex-col items-end w-full">
-        <h2 className="text-2xl text-black font-semibold mb-2">:المقاسات</h2>
-        <div className="flex gap-2">
-          {["S", "M", "L", "XL", "2XL", "3XL"].map((size) => (
-            <button
-              key={size}
-              type="button"
-              onClick={() => toggleSize(size)}
-              className={`p-2 px-4 rounded-md  ${
-                selectedSizes.includes(size)
-                  ? "bg-green text-white"
-                  : "bg-gray-200 text-black"
-              }`}
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-      </div>
+    {/* Size Selection */}
+<div className="flex flex-col items-end w-full">
+  <h2 className="text-2xl text-black font-semibold mb-2">:المقاسات</h2>
+  <div className="flex gap-2">
+    {["S", "M", "L", "XL", "2XL", "3XL"].map((size) => (
+      <button
+        key={size}
+        type="button"
+        onClick={() => toggleSize(size)}
+        className={`p-2 px-4 rounded-md ${
+          selectedSize === size ? "bg-green text-white" : "bg-gray-200 text-black"
+        }`}
+      >
+        {size}
+      </button>
+    ))}
+  </div>
+</div>
+
 
       {/* Product Price */}
       <div className="flex flex-col items-end w-full">
@@ -477,9 +492,9 @@ console.log("type",item)
       <button
         type="submit"
         className="w-full bg-green text-white p-2 rounded-md hover:bg-main transition"
-        disabled={loading}
+        disabled={loadingPost}
       >
-        {loading ? "جاري الإرسال..." : "إرسال المنتج"}
+        {loadingPost ? "جاري الإرسال..." : "إرسال المنتج"}
       </button>
     </form>
 

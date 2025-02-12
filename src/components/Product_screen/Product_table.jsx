@@ -7,6 +7,7 @@ import Loading from '../Loading';
 const Table = () => {
   const { refetch: refetchProduct, loading: loadingProduct, data: dataProduct } = useGet({ url: 'https://marfaa-alex.com/api/admin/products'});
   const [Product,setProduct] = useState([])
+ 
   useEffect(() => {
     refetchProduct()
   }, [refetchProduct])
@@ -128,7 +129,9 @@ const Table = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleViewAction = (product) => {
-    setSelectedProduct(product);
+    navigate(`/product/show/${product.id}`, {
+      state: { items: product, productDetails: Product },
+    });
   };
 
   const closePopup = () => {
@@ -200,7 +203,7 @@ const Table = () => {
             <td className="py-3 px-4">
               <button
                 onClick={() => handleViewAction(item)}
-                className="px-4 py-2 text-sm font-semibold text-green-600 border border-green-600 rounded-lg hover:bg-green-600 hover:text-green transition duration-200 flex items-center gap-2"
+                className="px-4 py-2 text-sm font-semibold text-green-600 border text-green border-green rounded-lg hover:bg-green-600 hover:text-green transition duration-200 flex items-center gap-2"
               >
                 View <i className="fa-solid fa-arrow-right text-lg"></i>
               </button>

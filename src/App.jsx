@@ -24,6 +24,7 @@ import { ContextProvider } from './Context/Auth'
 import Login from './Pages/Authentication/Login'
 import Settings from './Pages/Settings'
 import UpdateUser from './Pages/User/paged_user/UpdateUser'
+import ProductShow from './Pages/Product/ProductShow'
 
 const App = () => {
   return (
@@ -46,6 +47,7 @@ const App = () => {
   <Route path ="/user/info" element={<MainLayout><Show_info_user/></MainLayout>}></Route>
   {/* Product Routes */}
   <Route path="/product" element={<MainLayout><Product /></MainLayout>} />
+  <Route path="/product/show/:id" element={<MainLayout><ProductShow /></MainLayout>} />
   <Route path="/product/add" element={<SimpleLayout><Add_category /></SimpleLayout>} />
   {/* Order Routes */}
   <Route path="/order" element={<MainLayout><Order /></MainLayout>} />

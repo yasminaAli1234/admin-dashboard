@@ -9,11 +9,14 @@ const MainLayout = ({ children }) => {
     <div className="flex flex-col h-screen">
       <Navbar />
       <div className="flex pt-20 bg-white">
+        {/* Sidebar with dynamic width */}
         <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
 
+        {/* Main content area */}
         <div
-          className={`flex-1 p-6 transition-all duration-300 
-          ${isCollapsed ? "ml-20" : "ml-64"}`}
+          className={`p-6 transition-all duration-300 flex-1 ${
+            isCollapsed ? "ml-0" : "ml-64"
+          }`}
         >
           {children}
         </div>

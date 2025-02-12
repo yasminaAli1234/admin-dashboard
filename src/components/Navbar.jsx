@@ -14,11 +14,8 @@ const Navbar = () => {
     navigate("/", { replace: true });
 }
   return (
-    <div className="fixed top-0 right-0 w-full h-20 bg-back_ground flex items-center justify-end p-4 gap-4 ">
-      {/* Create New Notification Button */}
-      <button className="bg-main text-white py-2 px-7 rounded-md">
-        Create new
-      </button>
+    <div className="fixed z-10000 top-0 right-0 w-full h-20 bg-back_ground flex items-center justify-end p-4 gap-4 ">
+ 
 
       {/* Notification Icon */}
       <div className="text-gray-300 text-2xl">
