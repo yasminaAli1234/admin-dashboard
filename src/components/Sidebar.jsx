@@ -16,17 +16,17 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   return (
     <>
       {/* Toggle Button (Always Visible) */}
-      <button
+      {/* <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         className="md:hidden fixed top-4 left-4 text-black text-2xl z-50 bg-white p-2 rounded-md shadow-md"
       >
         <FaBars />
-      </button>
+      </button> */}
 
       {/* Sidebar */}
       <div
         className={`h-full bg-back_ground text-black flex flex-col p-6 fixed top-0 left-0 transition-all duration-300 z-40 
-        ${isCollapsed ? "-translate-x-full" : "translate-x-0"} md:translate-x-0 w-64 md:w-64`}
+        ${isCollapsed ? "-translate-x-full" : "translate-x-0"}  w-64 md:w-64`}
       >
         {/* Logo */}
         <div className="flex justify-center mb-6">
@@ -73,7 +73,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           <Link
             to="/user"
             className={`text-black text-lg font-medium p-2 rounded-md flex items-center gap-2 ${
-              location.pathname.startsWith("/user") ? "bg-main text-white" : "bg-white"
+              location.pathname.startsWith("/user") || location.pathname.startsWith("/update_user") ? "bg-main text-white" : "bg-white"
             }`}
           >
             <div className="w-5 h-5"><Image4 /></div>

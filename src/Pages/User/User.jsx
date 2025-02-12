@@ -25,7 +25,7 @@ const User = () => {
       <div className="flex items-center justify-between text-xl border-b lg:hidden">
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="text-xl cursor-pointer bg-green pb-2 m-4 text-white"
+          className="text-xl cursor-pointer bg-green pb-2 m-4 p-4 text-white"
         >
           Open Tabs
         </button>

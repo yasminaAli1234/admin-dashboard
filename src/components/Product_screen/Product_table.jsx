@@ -142,7 +142,7 @@ const Table = () => {
     return(<>{<Loading/>}</>)
   }
   return (
-    <div className="p-4">
+    <div className="p-4 overflow-auto ">
       {/* Search Input */}
       <div className="flex gap-3 justify-between">
       <div className="flex flex-1 items-center mb-4 bg-gray2 border-none text-black rounded-3xl p-1 shadow-sm">
@@ -164,9 +164,9 @@ const Table = () => {
       </div>
 
       {/* Scrollable container for the table */}
-      <div className="overflow-x-auto">
+      <div className="">
     
-  <table className="min-w-full bg-white shadow-md rounded-lg border">
+  <table className="w-full min-w-300 bg-white shadow-md rounded-lg border">
     <thead className="bg-green text-white">
       <tr>
         <th className="py-3 px-4 uppercase text-left">Image</th>
@@ -196,7 +196,7 @@ const Table = () => {
             <td className="py-3 text-black px-4 font-bold">${item.product_price}</td>
             <td className="py-3 text-black px-4">{item.user.user_name}</td>
             <td className="py-3 text-black px-4">
-              <span className="px-3 py-1 rounded-full bg-gray-200 text-black text-sm">
+              <span className="px-3 py-1  text-black text-sm">
                 {item.product_status}
               </span>
             </td>

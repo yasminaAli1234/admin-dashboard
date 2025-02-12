@@ -3,6 +3,7 @@ import { useGet } from '../../../Hooks/useGet';
 import axios from 'axios';
 import { useAuth } from '../../../Context/Auth';
 import Loading from '../../../components/Loading';
+import { Link } from 'react-router-dom';
 const Pending = () => {
   const [data, setData] = useState([]);
   const auth = useAuth()
@@ -115,76 +116,84 @@ const Pending = () => {
   
 
   return (
-    <div className="text-black p-6 min-h-screen flex flex-col items-center">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-7xl">
+<div className="text-black p-6">
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {Pending.map((item) => (
-        <div key={item.id} className="border p-4 rounded-lg shadow-lg bg-white flex flex-col">
-          {/* Product and User Info */}
-          <div className="flex items-center gap-4 min-w-0">
+       <Link
+               to={`/update_user/${item.id}`}
+               key={item.id}
+               state={{ user: item }}
+               className="border p-4 rounded-lg shadow-md bg-gray2 no-underline text-inherit hover:text-inherit min-w-0"
+               onClick={() => setData(item)} // Set the data in context on click
+             >
+          
+          {/* Product & User Info */}
+          <div className="flex items-center gap-4">
             <img
               src={item.image}
               alt={item.first_name}
-              className="w-24 h-24 rounded-md object-cover"
+              className="w-24 h-24 rounded-lg object-cover"
             />
-            <div className="flex flex-col min-w-0">
-              <span className="text-lg font-semibold truncate">{item.productName}</span>
-              <span className="text-gray-500 truncate">by {item.userName}</span>
+            <div className="flex flex-col flex-1">
+              <span className="text-lg font-semibold">{item.productName}</span>
+              <span className="text-gray-500">by {item.first_name} {item.last_name}</span>
             </div>
           </div>
   
           {/* Registration Date */}
-          <div className="mt-4">
+          <div className="mt-3">
             <span className="text-gray-600">Registration Date:</span>
-            <div className="font-bold truncate">{item.registrationDate}</div>
+            <div className="font-bold text-black">{item.created_at}</div>
           </div>
   
           {/* Contact Info */}
-          <div className="mt-4 flex flex-wrap gap-4">
-            <div className="min-w-0">
+          <div className="mt-3 flex flex-wrap gap-3">
+            <div>
               <span className="text-gray-600">Phone:</span>
-              <div className="font-medium truncate">{item.phone}</div>
+              <div className="font-medium text-black">{item.phone}</div>
             </div>
-            <div className="min-w-0">
+            <div>
               <span className="text-gray-600">Email:</span>
-              <div className="font-medium truncate">{item.email}</div>
+              <div className="font-medium text-black">{item.email}</div>
             </div>
           </div>
   
-          {/* Gallery and Location */}
-          <div className="mt-4 border-t pt-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex gap-2 flex-wrap">
+          {/* Gallery & Location */}
+          <div className="mt-3 border-t pt-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {item.testproducts.map((galleryItem, index) => (
-                <div key={index} className="flex flex-col items-center min-w-0">
-                  <img src={galleryItem.img} alt="Gallery item" className="w-12 h-12 rounded-md" />
-                  <span className="text-xs text-gray-500 truncate">{galleryItem.describtion}</span>
+                <div key={index} className="flex flex-col items-center">
+                  <img src={galleryItem.img} alt="Gallery item" className="w-14 h-14 rounded-md" />
+                  <span className="text-xs text-gray-500">{galleryItem.describtion}</span>
                 </div>
               ))}
             </div>
-            <div className="min-w-0">
+            <div className='flex justify-between items-center'>
               <span className="text-gray-600">Location:</span>
-              <div className="font-medium truncate">{item.full_address}</div>
+              <div className="font-medium text-black">{item.full_address}</div>
             </div>
           </div>
   
           {/* Action Buttons */}
-          <div className="mt-6 flex justify-between">
+          <div className="mt-5 flex justify-between">
             <button
               onClick={() => handleReject(item.id)}
-              className="px-4 py-2 border text-black rounded-md bg-transparent border-none font-bold hover:text-red-600"
+              className="px-4 py-2 text-sm font-bold text-red-600 bg-transparent border border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition duration-200"
             >
               Reject
             </button>
             <button
               onClick={() => handleApprove(item.id)}
-              className="px-4 py-2 border border-green-500 text-white bg-green-500 rounded-md hover:bg-green-600"
+              className="px-4 py-2 text-sm font-bold text-green border border-green bg-green-500 rounded-lg hover:bg-green-600 transition duration-200"
             >
               Approve
             </button>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   </div>
+  
   
 
   );

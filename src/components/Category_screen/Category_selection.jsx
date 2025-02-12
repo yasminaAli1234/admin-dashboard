@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import image1 from '../../assets/1.jpg';
 import image2 from '../../assets/2.jpg';
 import image3 from '../../assets/3jpg.jpg';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const CategorySelection = ({items}) => {
   const navigate = useNavigate(); // Hook for navigation
@@ -15,7 +16,10 @@ const CategorySelection = ({items}) => {
   return (
 <div className="flex items-center justify-center min-h-screen p-6">
   <div className="w-full max-w-5xl">
-    <h2 className="text-center text-3xl font-bold text-gray-900 mb-8">اختر الفئة</h2>
+    <h2 className="text-start text-3xl font-bold text-gray-900 mb-8 flex items-center gap-2">
+  
+  اختر الفئة
+</h2>
 
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {items.map((category, index) => (

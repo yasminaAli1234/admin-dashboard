@@ -16,7 +16,8 @@ const Active_Product = ({data}) => {
       <table className="min-w-full table-auto rounded-lg overflow-x-auto">
         <thead>
           <tr className="bg-green text-white">
-            <th className="px-4 py-2 uppercase">Product No</th>
+          <th className="px-4 py-2 uppercase">SL</th>
+            
             <th className="px-4 py-2 uppercase">Name</th>
             <th className="px-4 py-2 uppercase">Price</th>
             <th className="px-4 py-2 uppercase">Quantity</th>
@@ -25,9 +26,10 @@ const Active_Product = ({data}) => {
           </tr>
         </thead>
         <tbody>
-          {data?.map((product) => (
+          {data?.map((product,index) => (
             <tr key={product.id} className="text-center bg-gray-100">
-              <td className="px-4 py-2 text-black">{product.id}</td>
+               <td className="px-4 py-2 text-black">{index+1}</td>
+              
               <td className="px-4 py-2 text-black">{product.name}</td>
               <td className="px-4 py-2 text-black">{product.price} $</td>
               <td className="px-4 py-2 text-black">{product.quantity}</td>
@@ -49,7 +51,7 @@ const Active_Product = ({data}) => {
       {/* Modal for Viewing Product Details */}
       {selectedProduct && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <div className="bg-white text-black p-6 rounded-lg shadow-lg w-96">
             <h2 className="text-xl font-bold mb-2">{selectedProduct.name}</h2>
             <p><strong>Price:</strong> {selectedProduct.price} $</p>
             <p><strong>Quantity:</strong> {selectedProduct.quantity}</p>
@@ -60,7 +62,7 @@ const Active_Product = ({data}) => {
             <p><strong>Status:</strong> {selectedProduct.status}</p>
             <button
               onClick={() => setSelectedProduct(null)}
-              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
+              className="mt-4 px-4 py-2 bg-green text-white rounded-lg"
             >
               Close
             </button>

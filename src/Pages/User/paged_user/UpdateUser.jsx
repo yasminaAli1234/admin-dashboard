@@ -5,6 +5,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { CircularProgress, MenuItem, TextField, Button, Menu } from '@mui/material';
 import axios from 'axios';
 import { useAuth } from '../../../Context/Auth';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const UpdateUser = () => {
   const { id } = useParams();
@@ -86,9 +87,12 @@ const UpdateUser = () => {
   return (
     <div className="p-6 text-black">
       {/* User Profile Section */}
+  
       <div className="flex items-center justify-between gap-6 mb-6">
+
       {/* User Info */}
       <div className="flex items-center gap-6">
+      <FaArrowLeft className="text-4xl cursor-pointer text-green" onClick={()=>navigate(-1)} />
         <img src={userData.image || "/default-avatar.png"} alt="Profile" className="w-24 h-24 rounded-full" />
         <div>
           <h1 className="text-2xl font-semibold">{firstName} {lastName}</h1>

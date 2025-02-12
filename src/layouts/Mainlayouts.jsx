@@ -7,7 +7,7 @@ const MainLayout = ({ children }) => {
 
   return (
     <div className="flex flex-col h-screen">
-      <Navbar />
+      <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       <div className="flex pt-20 bg-white">
         {/* Sidebar with dynamic width */}
         <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />

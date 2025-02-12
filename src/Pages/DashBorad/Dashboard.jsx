@@ -3,6 +3,7 @@ import Pending_seller from '../../components/DashBorad_screen/Pending_seller'
 import Active_Product from '../../components/DashBorad_screen/Active_Prouduct'
 import Card_dash from '../../components/DashBorad_screen/Card_dash'
 import { useGet } from '../../Hooks/useGet'
+import Loading from '../../components/Loading'
 
 const Dashboard = () => {
   const { refetch: refetchData, loading: loadingData, data: Data } = useGet({
@@ -23,7 +24,9 @@ useEffect(() => {
   }
   console.log("data" , Data)
 }, [Data])
-
+if(loadingData){
+  return <Loading/>
+}
   return (
     <div>
       <Card_dash data={data}/>

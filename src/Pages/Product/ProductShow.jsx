@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDelete } from "../../Hooks/useDelete";
 import { useAuth } from "../../Context/Auth";
+import { FaArrowLeft } from "react-icons/fa";
 
 const ProductShow = () => {
   const { id } = useParams();
@@ -74,8 +75,9 @@ const confirmDelete = async () => {
   return (
     <div className="flex flex-col md:flex-row p-6 rounded-lg shadow-lg">
       {/* Left: Image Gallery */}
-      <div className="w-full md:w-1/2 flex flex-col items-center">
-        <h2 className="text-lg font-semibold mb-2">Product Images</h2>
+      <div className="w-full md:w-1/2 flex flex-col items-start">
+      <FaArrowLeft onClick={(()=>navigate(-1))} className="text-4xl mb-7 text-black cursor-pointer" />
+        {/* <h2 className="text-lg text-green font-semibold mb-2">Product Images</h2> */}
 
         <div className="w-full flex flex-col gap-2">
           {images.length > 0 ? (
@@ -110,7 +112,7 @@ const confirmDelete = async () => {
           type="text"
           value={product.product_name}
           readOnly
-          className="w-full p-2 border border-gray-300 rounded-md bg-gray-200 mb-4"
+          className="w-full p-2 border border-gray-300 text-black rounded-md bg-gray-200 mb-4"
         />
 
         <label className="block font-semibold text-gray-700 mb-1">Price:</label>
@@ -118,7 +120,7 @@ const confirmDelete = async () => {
           type="text"
           value={`$${product.product_price}`}
           readOnly
-          className="w-full p-2 border border-gray-300 rounded-md bg-gray-200 mb-4"
+          className="w-full p-2 border text-black border-gray-300 rounded-md bg-gray-200 mb-4"
         />
 
         <label className="block font-semibold text-gray-700 mb-1">Size:</label>
@@ -141,7 +143,7 @@ const confirmDelete = async () => {
           type="text"
           value={product.product_location}
           readOnly
-          className="w-full p-2 border border-gray-300 rounded-md bg-gray-200 mb-4"
+          className="w-full p-2 border text-black border-gray-300 rounded-md bg-gray-200 mb-4"
         />
 
         <label className="block font-semibold text-gray-700 mb-1">Description:</label>
@@ -149,12 +151,12 @@ const confirmDelete = async () => {
           type="text"
           value={product.product_description}
           readOnly
-          className="w-full p-2 border border-gray-300 rounded-md bg-gray-200 mb-4"
+          className="w-full p-2 border text-black border-gray-300 rounded-md bg-gray-200 mb-4"
         />
 
         <div className="flex gap-4 items-center">
           <p className="text-black text-xl font-bold">Product status:</p>
-          <button className="border border-green bg-transparent p-2 font-bold text-green">
+          <button className="border border-green rounded-md bg-transparent p-2 font-bold text-green">
             {product.product_status}
           </button>
         </div>
@@ -163,9 +165,9 @@ const confirmDelete = async () => {
         <div className="flex items-center gap-4 mt-4">
           <p className="text-black text-xl font-bold">Action</p>
           <div className="flex justify-between gap-3">
-            <button className="bg-green px-7 text-white p-2 rounded-md">Suspend</button>
+            <button className="bg-green  px-7 text-white p-2 rounded-md">Suspend</button>
             <button
-              className="text-green p-2 rounded-md"
+              className="text-green p-2 text-xl rounded-md"
               onClick={() => handleDeleteClick(product)}
             >
               Delete
@@ -178,21 +180,23 @@ const confirmDelete = async () => {
       {isDeleteModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-lg font-semibold mb-2">Confirm Deletion</h2>
+            <h2 className="text-lg font-semibold mb-2 text-black">Confirm Deletion</h2>
             <p className="text-gray-700">Enter the reason for deleting this product:</p>
             <textarea
-              className="w-full border p-2 rounded mt-2"
+              className="w-full border p-2 rounded mt-2 bg-gray-100"
               placeholder="Enter reason..."
               value={deleteReason}
+              aria-live="3"
               onChange={(e) => setDeleteReason(e.target.value)}
             />
-            <div className="flex justify-end gap-3 mt-4">
-              <button className="bg-gray-300 px-4 py-2 rounded-md" onClick={() => setIsDeleteModalOpen(false)}>
+            <div className="flex justify-between items-center gap-3 mt-4">
+            <button className="bg-green text-white font-bold px-4 py-2 rounded-md" onClick={confirmDelete}>
+                Confirem
+              </button>
+              <button className="bg-transparent text-black font-bold px-4 py-2 rounded-md" onClick={() => setIsDeleteModalOpen(false)}>
                 Cancel
               </button>
-              <button className="bg-red-500 text-white px-4 py-2 rounded-md" onClick={confirmDelete}>
-                Delete
-              </button>
+            
             </div>
           </div>
         </div>

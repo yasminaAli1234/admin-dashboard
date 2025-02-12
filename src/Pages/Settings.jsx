@@ -184,7 +184,7 @@ const Settings = () => {
   {area.map((a) => (
     <div 
       key={a.id} 
-      className="p-5 border border-gray-200 rounded-lg shadow-md bg-white transition-transform hover:scale-[1.02]"
+      className="p-5 border bg-gray-100 border-gray-200 rounded-lg shadow-md  transition-transform hover:scale-[1.02]"
     >
       <h3 className="font-semibold text-lg text-gray-800">{a.name}</h3>
       <p className="text-gray-500 text-sm">City: {city.find((c) => c.id === a.city_id)?.name || "Unknown"}</p>
@@ -213,17 +213,17 @@ const Settings = () => {
       {(showAddPopup || editCityId !== null || editAreaId !== null) && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="bg-white p-6 rounded">
-            <h2 className="text-lg font-bold mb-2">
+            <h2 className="text-lg font-bold mb-2 text-black">
               {showAddPopup ? (tab === 0 ? "Add City" : "Add Area") : (editCityId ? "Edit City" : "Edit Area")}
             </h2>
-            <input type="text" className="border p-2 w-full mb-2" value={tab === 0 ? cityName : areaName} onChange={(e) => tab === 0 ? setCityName(e.target.value) : setAreaName(e.target.value)} />
+            <input type="text" placeholder="name" className="border bg-gray-100 text-black  p-2 w-full mb-2" value={tab === 0 ? cityName : areaName} onChange={(e) => tab === 0 ? setCityName(e.target.value) : setAreaName(e.target.value)} />
             {tab === 1 && (
-              <select className="border p-2 w-full mb-2" value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)}>
+              <select className="border p-2 w-full mb-2 bg-gray-100 text-black" value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)}>
                 <option value="">Select City</option>
                 {city.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
             )}
-            <div className="mt-4 flex justify-end space-x-2">
+            <div className="mt-4 flex justify-between space-x-2">
             <button
   className="bg-gray-300 px-4 py-2 rounded"
   onClick={() => {
@@ -237,7 +237,7 @@ const Settings = () => {
 >
   Cancel
 </button>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={showAddPopup ? (tab === 0 ? handleSubmitCity : handleSubmitArea) : (editCityId ?()=> handleUpdateCity(editCityId) : ()=> handleUpdateArea(editAreaId))}>Save</button>
+              <button className="bg-green text-white px-4 py-2 rounded" onClick={showAddPopup ? (tab === 0 ? handleSubmitCity : handleSubmitArea) : (editCityId ?()=> handleUpdateCity(editCityId) : ()=> handleUpdateArea(editAreaId))}>Save</button>
             </div>
           </div>
         </div>

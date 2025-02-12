@@ -8,7 +8,9 @@ import appImage from '../../assets/content.png'
 import mobileImage from '../../assets/tele.png'
 import app from '../../assets/app.jpg'
 import play from '../../assets/play.jpg'
+import { useNavigate } from 'react-router-dom';
 const Landing = () => {
+  const navigate = useNavigate();
   return (
     <div className=" flex flex-col">
    {/* Landing Section with Linear Gradient */}

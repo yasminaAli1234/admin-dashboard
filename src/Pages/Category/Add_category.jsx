@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Navbar_category from '../../components/Category_screen/Navbar_category'
 import CategorySelection from '../../components/Category_screen/Category_selection'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useGet } from '../../Hooks/useGet';
 import Loading from '../../components/Loading';
 
@@ -12,6 +12,7 @@ const Add_category = () => {
 
   const {refetch: refetchCategory,loading: loadingCategory,data: category,} = useGet({url: `https://marfaa-alex.com/api/admin/categories`,});
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate()
   useEffect(() => {
     if (items) {
       console.log("Received items:", items);

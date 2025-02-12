@@ -264,11 +264,11 @@ const Update_category = () => {
       {showAddPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg w-96">
-            <h2 className="text-xl font-bold mb-4">Add Subcategory</h2>
-            <label className="block font-semibold">Name:</label>
+            <h2 className="text-xl font-bold mb-4 text-black">Add Subcategory</h2>
+            <label className="block font-semibold text-gray-500">Name:</label>
             <input
               type="text"
-              className="w-full p-2 border rounded-md mb-4"
+              className="w-full p-2 border bg-gray-300 text-black rounded-md mb-4"
               placeholder="Enter subcategory name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -293,11 +293,11 @@ const Update_category = () => {
            {showUpdatePopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg w-96">
-            <h2 className="text-xl font-bold mb-4">Update Subcategory</h2>
-            <label className="block font-semibold">Name:</label>
+            <h2 className="text-xl font-bold mb-4 text-black">Update Subcategory</h2>
+            <label className="block font-semibold text-gray-500">Name:</label>
             <input
               type="text"
-              className="w-full p-2 border rounded-md mb-4"
+              className="w-full bg-gray-200 text-black p-2 border rounded-md mb-4"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />

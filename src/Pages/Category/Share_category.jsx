@@ -271,64 +271,71 @@ const toggleSize = (size) => {
       <Navbar_category />
 
       {/* Main Content */}
-      <div className="flex flex-col md:flex-row justify-between relative top-[80px] p-4 gap-3 bg-white">
+      <div className="flex flex-col lg:flex-row justify-between relative top-[80px] p-4 gap-3 bg-white">
         {/* Left Part: Box 400x450 */}
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full flex-1 flex flex-col items-start">
+  {/* {`category ${id}`} */}
+  
+  {/* File Input (Hidden) */}
+  <input
+    type="file"
+    multiple
+    accept="image/*"
+    onChange={handleFileChange}
+    id="fileInput"
+    className="hidden"
+  />
 
-          {`category ${id}`}
-      {/* File Input (Hidden) */}
-      <input
-        type="file"
-        multiple
-        accept="image/*"
-        onChange={handleFileChange}
-        id="fileInput"
-        className="hidden"
-      />
+  {/* Upload Box */}
+  <div
+    className="w-full lg:w-[500px] h-[200px] bg-gray-200 rounded-lg flex justify-center items-center cursor-pointer mb-6 transition hover:bg-gray-300"
+    onClick={() => document.getElementById("fileInput").click()}
+  >
+    <span className="text-black cursor-pointer text-lg font-semibold">اضف صور</span>
+  </div>
 
-      {/* Upload Box */}
-      <div
-        className="w-full md:w-[500px] h-[200px] bg-gray-200 rounded-lg flex justify-center items-center cursor-pointer mb-6"
-        onClick={() => document.getElementById("fileInput").click()}
-      >
-        <span className="text-black cursor-pointer">اضف صور</span>
+  {/* Image Preview Grid with Enhanced Design */}
+  <div className="grid grid-cols-3 gap-4">
+    {images.map((image, index) => (
+      <div key={index} className="relative group">
+        {/* Image with Hover Effect */}
+        <div className="w-28 h-28 overflow-hidden rounded-lg shadow-lg transition-transform transform hover:scale-105">
+          <img
+            src={image}
+            alt={`Uploaded ${index}`}
+            className="w-full h-full object-cover rounded-lg"
+          />
+        </div>
+
+        {/* Overlay with Delete Button */}
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-lg opacity-0 group-hover:opacity-100 flex justify-center items-center transition">
+          <button
+            onClick={() => removeImage(index)}
+            className="bg-red-500 text-white text-sm px-3 py-1 rounded-full shadow-lg"
+          >
+            ✕ حذف
+          </button>
+        </div>
       </div>
-
-      {/* Image Preview Grid */}
-      <div className="grid grid-cols-3 gap-4">
-        {images.map((image, index) => (
-          <div key={index} className="relative">
-            <img
-              src={image}
-              alt={`Uploaded ${index}`}
-              className="w-28 h-28 object-cover rounded-lg"
-            />
-            <button
-              onClick={() => removeImage(index)}
-              className="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded-full"
-            >
-              ✕
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
+    ))}
+  </div>
+</div>
 
         {/* Category Information */}
 
         <form
       onSubmit={handleSubmit}
-      className="flex flex-col items-end md:w-[70%] bg-white px-4 rounded-lg space-y-2 gap-2"
+      className="flex flex-col items-end md:w-[90%] bg-white px-4 rounded-lg space-y-2 gap-2"
     >
         <div className="flex flex-col items-end w-full">
     <h2 className="text-2xl text-black font-semibold mb-2">:الفئة</h2>
-    <div className="flex justify-between items-end bg-gray-100 w-full p-3 rounded-md">
+    <div className="flex justify-end h-full items-end bg-gray-100 w-full p-3 rounded-md">
       {/* <p onClick={triggerFileInput} className="text-green ml-4 cursor-pointer">
         تغير
       </p> */}
       <div className="flex items-center">
         <div className="flex flex-col mr-4">
-          <p className="font-semibold text-lg text-black">{type}</p>
+          <p className="font-semibold text-lg text-main">{type}</p>
           <p className="text-lg text-black">{item}</p>
         </div>
         <div>
@@ -377,7 +384,7 @@ const toggleSize = (size) => {
           <option value="" disabled>اختر</option>
           <option value="male">رجالي</option>
           <option value="female">حريمي</option>
-          <option value="other">اخر</option>
+          
         </select>
       </div>
 
@@ -494,7 +501,7 @@ const toggleSize = (size) => {
         className="w-full bg-green text-white p-2 rounded-md hover:bg-main transition"
         disabled={loadingPost}
       >
-        {loadingPost ? "جاري الإرسال..." : "إرسال المنتج"}
+        {loadingPost ? '...جاري الارسال' : "إرسال المنتج"}
       </button>
     </form>
 

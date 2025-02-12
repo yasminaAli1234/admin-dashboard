@@ -5,7 +5,7 @@ const Show_info_user = () => {
   const { data } = useData();
 
   // Dropdown values for gender and cities (you can replace these with actual data)
-  const genders = ['Male', 'Female', 'Other'];
+  const genders = ['Male', 'Female'];
   const cities = ['New York', 'Los Angeles', 'Chicago'];
   const areas = ['Area 1', 'Area 2', 'Area 3'];
   const [click,setClick] = useState(false);

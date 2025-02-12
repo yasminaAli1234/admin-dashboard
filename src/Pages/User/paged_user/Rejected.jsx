@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useData } from '../../../Context/data';
 import { useGet } from '../../../Hooks/useGet';
 import Loading from '../../../components/Loading';
+import { FaArrowLeft } from 'react-icons/fa';
 
 
 const Rejected = () => {
@@ -79,7 +80,9 @@ const Rejected = () => {
 
   return (
     <div className="text-black p-6">
+ 
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
       {Reject.map((item) => (
         <Link
           to={`/update_user/${item.id}`}
