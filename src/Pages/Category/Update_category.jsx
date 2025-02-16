@@ -5,6 +5,7 @@ import { usePost } from "../../Hooks/usePostJson";
 import axios from "axios";
 import { useAuth } from "../../Context/Auth";
 import { useDelete } from "../../Hooks/useDelete";
+import Loading from "../../components/Loading";
 
 const Update_category = () => {
   const { id } = useParams();
@@ -14,7 +15,8 @@ const Update_category = () => {
   const [name, setName] = useState("");
   
   const [value, setValue] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
+  const [imageCategory, setImageCategory] = useState("");
   const [imageBase64, setImageBase64] = useState("");
   const [subCategories, setSubCategories] = useState([]);
   const [showAddPopup, setShowAddPopup] = useState(false);
@@ -24,7 +26,7 @@ const Update_category = () => {
   const [subcategoryToDelete, setSubcategoryToDelete] = useState(null);
   const [deletePopupVisible, setDeletePopupVisible] = useState(false);
 
-  const { refetch: refetchSubCategory, data: subCategory } = useGet({
+  const { refetch: refetchSubCategory,loading,loadingSubCategory, data: subCategory } = useGet({
     url: `https://marfaa-alex.com/api/admin/subCategories`,
   });
 
@@ -36,7 +38,7 @@ const Update_category = () => {
   useEffect(() => {
     if (category) {
       setValue(category.name);
-      setImage(category.image);
+      setImageCategory(category.image);
       setCategoryId(category.id);
     }
   }, [category]);
@@ -53,6 +55,22 @@ const Update_category = () => {
 
   const handleGoBack = () => navigate(-1);
 
+    // Handle image file input change
+    const handleImageUpload = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+  
+        reader.onload = () => {
+          setImage(reader.result); // Base64 string
+        };
+  
+        reader.onerror = (error) => {
+          console.error("Error converting image to Base64:", error);
+        };
+      }
+    };
   // Handle Add New SubCategory
   const handleAddSubCategory = async () => {
     if (!categoryId) {
@@ -144,14 +162,18 @@ const Update_category = () => {
   };
 
 
-    // Convert Image to Base64
-    const handleImageChange = (e) => {
+  
+
+     // Handle image file input change
+     const handleImageCategoryChange = (e) => {
       const file = e.target.files[0];
       if (file) {
-        setImage(URL.createObjectURL(file)); // Show preview
         const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result; // Keep full Base64 string
+          setImageCategory((prevImages) => [...prevImages, { image: base64String }]); 
+        };
         reader.readAsDataURL(file);
-        reader.onloadend = () => setImageBase64(reader.result);
       }
     };
 
@@ -189,7 +211,9 @@ const Update_category = () => {
     }
   };
 
-  
+  if(loadingSubCategory){
+    return <Loading/> 
+  }
 
   return (
     <div className="px-4 py-6 bg-white min-h-screen">
@@ -216,11 +240,11 @@ const Update_category = () => {
       <div>
         <label className="block text-black font-semibold mb-2 text-xl">Background Photo:</label>
         <div className="w-full h-[150px] flex justify-center items-center bg-gray-100 relative rounded-md overflow-hidden">
-          {image && <img src={image} alt="Category" className="h-full w-full object-cover" />}
+          {imageCategory && <img src={imageCategory} alt="Category" className="h-full w-full object-cover" />}
           <label htmlFor="fileInput" className="absolute text-white bg-green px-6 py-2 rounded-lg cursor-pointer">
             Change Image
           </label>
-          <input type="file" id="fileInput" className="hidden" onChange={handleImageChange} />
+          <input type="file" id="fileInput" className="hidden" onChange={handleImageCategoryChange} />
         </div>
       </div>
 
@@ -242,22 +266,26 @@ const Update_category = () => {
           <button onClick={() => setShowAddPopup(true)} className="bg-main text-white px-6 py-2 rounded-md">
             <i className="fa-solid fa-plus mr-2"></i> Add
           </button>
+        
         </div>
 
         <div className="mt-6 space-y-4">
-          {subCategories.length > 0 ? (
-            subCategories.map((subcategory) => (
-              <div key={subcategory.id} className="flex items-center gap-4 bg-gray-100 p-3 rounded-md">
-                <img src={subcategory.image} alt="Subcategory" className="h-12 w-12 object-cover rounded-md" />
-                <p className="text-black flex-1">{subcategory.name}</p>
-                <i className="fa-solid fa-edit text-gray-900 text-xl cursor-pointer" onClick={() => handleEditSubCategory(subcategory)}></i>
-                <i className="fa-solid fa-trash text-red-500 text-xl cursor-pointer" onClick={()=>handleDelete(subcategory.id,subcategory.name)}></i>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500">No subcategories added yet</p>
-          )}
+  {subCategories.filter(subcategory => subcategory.category_id === Number(id)).length > 0 ? (
+    subCategories
+      .filter(subcategory => subcategory.category_id === Number(id))
+      .map((subcategory) => (
+        <div key={subcategory.id} className="flex items-center gap-4 bg-gray-100 p-3 rounded-md">
+          <img src={subcategory.image} alt="Subcategory" className="h-12 w-12 object-cover rounded-md" />
+          <p className="text-black flex-1">{subcategory.name}</p>
+          <i className="fa-solid fa-edit text-gray-900 text-xl cursor-pointer" onClick={() => handleEditSubCategory(subcategory)}></i>
+          <i className="fa-solid fa-trash text-red-500 text-xl cursor-pointer" onClick={() => handleDelete(subcategory.id, subcategory.name)}></i>
         </div>
+      ))
+  ) : (
+    <p className="text-gray-500">No subcategories added yet</p>
+  )}
+</div>
+
       </div>
 
       {/* Add Subcategory Popup */}
@@ -275,7 +303,11 @@ const Update_category = () => {
             />
 
             <label className="block font-semibold">Image:</label>
-            <input type="file" className="w-full p-2 border rounded-md mb-4" onChange={(e) => setImage(e.target.files[0])} />
+            <input 
+  type="file" 
+  className="w-full p-2 border rounded-md mb-4" 
+  onChange={handleImageUpload} // Pass event automatically
+/>
 
             <div className="flex justify-end gap-4">
               <button onClick={() => setShowAddPopup(false)} className="bg-gray-500 text-white px-4 py-2 rounded-md">
@@ -302,7 +334,7 @@ const Update_category = () => {
               onChange={(e) => setName(e.target.value)}
             />
             <label className="block font-semibold">Image:</label>
-            <input type="file" className="w-full p-2 border rounded-md mb-4" onChange={(e) => setImage(e.target.files[0])} />
+            <input type="file" className="w-full p-2 border rounded-md mb-4" onChange={handleImageUpload} />
 
             <div className="flex justify-end gap-4">
               <button onClick={() => setShowUpdatePopup(false)} className="bg-gray-500 text-white px-4 py-2 rounded-md">

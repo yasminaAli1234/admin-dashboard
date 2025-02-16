@@ -87,103 +87,86 @@ const Landing = () => {
 </div>
 
 
-<div className="relative bg-gradient-to-b from-white to-green py-12">
-  {/* Left Section: Image and Telephone */}
-  <div className="flex justify-between items-center container mx-auto px-6">
-    <div className="flex flex-col items-center w-[45%]">
-      <div className="relative w-[300px] h-[550px]">
-        {/* Outer Image (e.g., mobile phone) */}
-        <img
-          src={mobileImage} // Replace with the mobile image URL
-          alt="Phone"
-          className="w-full h-auto object-cover "
-        />
+<div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-green">
+  {/* Container */}
 
-        {/* Inner Image (e.g., app screen image) */}
+  <div className="flex flex-grow flex-col-reverse gap-3 md:flex-row justify-between items-center container mx-auto px-6">
+    
+    {/* Left Section: Image and Telephone */}
+    <div className="flex flex-col items-center w-full md:w-[45%]">
+      <div className="relative w-[90%] max-w-[300px] h-auto ">
         <img
-          src={appImage} // Replace with the app image URL
+          src={mobileImage} 
+          alt="Phone"
+          className="w-full h-auto object-contain"
+        />
+        <img
+          src={appImage} 
           alt="App Screen"
-          className="absolute top-0 left-0 w-full h-full object-cover rounded-lg"
+          className="absolute top-0 left-0 w-full h-full object-contain  "
         />
       </div>
     </div>
-    <div className="flex flex-col absolute top-14 right-20 ">
-      <h3 className="text-3xl font-bold text-gray-800 mb-4">حمل تطبيق مرفأ الان</h3>
-      <span className="text-xl font-semibold text-gray-600 mb-4">مِنك وليك</span>
 
-      {/* Two images underneath */}
-      <div className="flex justify-between gap-4">
-  
-      <img
-    src={play} 
-    alt="App Image"
-    className="w-[250px] h-auto object-contain rounded-sm"
-  />
+    {/* Right Section: Text & Buttons */}
+    <div className="flex flex-col text-center md:text-right mt-6 md:mt-0 w-full md:w-[50%]">
+      <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">حمل تطبيق مرفأ الان</h3>
+      <span className="text-lg sm:text-xl font-semibold text-gray-600 mb-4">مِنك وليك</span>
 
-  {/* Second image (app) */}
-  <img
-    src={app}
-    alt="Play Store Image"
-    className="w-[250px] h-auto object-contain rounded-sm"
-  />
-</div>
-
+      {/* Buttons */}
+      <div className="flex justify-center md:justify-start gap-4 flex-wrap">
+        <img src={play} alt="Play Store" className="w-[140px] sm:w-[180px] md:w-[220px] h-auto object-contain rounded-sm" />
+        <img src={app} alt="App" className="w-[140px] sm:w-[180px] md:w-[220px] h-auto object-contain rounded-sm" />
+      </div>
     </div>
   </div>
 
   {/* Footer Section */}
-  <div className="absolute bottom-0 w-full bg-main text-white text-center py-6">
-  <div className="container mx-auto ">
-    <div className="flex justify-between  wrap">
-      
-      {/* Left Column: Contact Us */}
-      <div className="flex flex-col items-end text-end md:items-start md:text-start">
-        <h2 className="text-2xl font-bold mb-6">تواصل معنا</h2>
-        <ul className="space-y-4">
-          <li className="flex items-center gap-1">
-          <span>email@example.com</span>
-            <i className="fas fa-envelope ml-2"></i>
-            
-          </li>
-          <li className="flex items-center gap-1 ">
-          <span>1234 Street, City, Country</span>
-            <i className="fas fa-map-marker-alt ml-2"></i>
-            
-          </li>
-          <li className="flex items-center gap-1">
-          <span>+1 (234) 567-890</span>
-            <i className="fas fa-phone-alt ml-2"></i>
-            
-          </li>
-        </ul>
-      </div>
-      
-      {/* Middle Column: Location */}
-      <div className="flex flex-col items-center text-end">
-        <h2 className="text-2xl font-bold mb-6">الموقع</h2>
-        <ul className="space-y-4">
-          <li className="text-lg">المميزات</li>
-          <li className="text-lg">التطبيق</li>
-        </ul>
-      </div>
+  <div className="w-full bg-main text-white text-center py-6">
+    <div className="container mx-auto px-6">
+      <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-8 md:space-y-0">
+        {/* Left Column: Contact */}
+        <div className="flex flex-col items-center md:items-start text-center md:text-left w-full md:w-1/3">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4">تواصل معنا</h2>
+          <ul className="space-y-2 sm:space-y-4">
+            <li className="flex items-center justify-center md:justify-start gap-1">
+              <i className="fas fa-envelope"></i>
+              <span>email@example.com</span>
+            </li>
+            <li className="flex items-center justify-center md:justify-start gap-1">
+              <i className="fas fa-map-marker-alt"></i>
+              <span>1234 Street, City, Country</span>
+            </li>
+            <li className="flex items-center justify-center md:justify-start gap-1">
+              <i className="fas fa-phone-alt"></i>
+              <span>+1 (234) 567-890</span>
+            </li>
+          </ul>
+        </div>
 
-      {/* Right Column: Image and Description */}
-      <div className="flex flex-col items-end text-end">
-        <img
-          src={logoWhite} // Replace with actual image path
-          alt="App Logo"
-          className="w-[80px] h-auto object-contain mb-4"
-        />
-        <p className="text-base leading-6">
-          تطبيق مبتكر يتيح عرض وإضافة منتجات مستعملة أو جديدة بأسعار رمزية.
-        </p>
+        {/* Middle Column: Navigation */}
+        <div className="flex flex-col items-center w-full md:w-1/3">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4">الموقع</h2>
+          <ul className="space-y-2 sm:space-y-4">
+            <li className="text-lg">المميزات</li>
+            <li className="text-lg">التطبيق</li>
+          </ul>
+        </div>
+
+        {/* Right Column: Logo & Description */}
+        <div className="flex flex-col items-center w-full md:w-1/3">
+          <img src={logoWhite} alt="App Logo" className="w-[60px] sm:w-[80px] h-auto object-contain mb-4" />
+          <p className="text-sm sm:text-base leading-6">
+            تطبيق مبتكر يتيح عرض وإضافة منتجات مستعملة أو جديدة بأسعار رمزية.
+          </p>
+        </div>
       </div>
-      
     </div>
   </div>
 </div>
 
-</div>
+
+
 
 
 

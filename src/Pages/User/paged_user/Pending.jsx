@@ -126,7 +126,7 @@ const Pending = () => {
                className="border p-4 rounded-lg shadow-md bg-gray2 no-underline text-inherit hover:text-inherit min-w-0"
                onClick={() => setData(item)} // Set the data in context on click
              >
-          
+
           {/* Product & User Info */}
           <div className="flex items-center gap-4">
             <img
