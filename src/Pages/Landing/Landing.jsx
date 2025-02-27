@@ -9,6 +9,8 @@ import mobileImage from '../../assets/tele.png'
 import app from '../../assets/app.jpg'
 import play from '../../assets/play.jpg'
 import { useNavigate } from 'react-router-dom';
+import SplidImage from './SplidImage';
+import Cart from './cart';
 const Landing = () => {
   const navigate = useNavigate();
   return (
@@ -85,7 +87,11 @@ const Landing = () => {
     </div>
   </div>
 </div>
+<div className="bg-gradient-to-b from-white  to-gray2 w-full flex flex-col items-center justify-center text-center relative overflow-hidden ">
+<SplidImage/>
+</div>
 
+<Cart/>
 
 <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-green">
   {/* Container */}
