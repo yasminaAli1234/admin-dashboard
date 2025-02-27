@@ -10,7 +10,8 @@ import app from '../../assets/app.jpg'
 import play from '../../assets/play.jpg'
 import { useNavigate } from 'react-router-dom';
 import SplidImage from './SplidImage';
-import Cart from './cart';
+import Cart from './Cart';
+
 const Landing = () => {
   const navigate = useNavigate();
   return (
