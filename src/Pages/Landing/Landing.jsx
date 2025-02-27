@@ -88,7 +88,7 @@ const Landing = () => {
     </div>
   </div>
 </div>
-<div className="bg-gradient-to-b from-white  to-gray2 w-full flex flex-col items-center justify-center text-center relative overflow-hidden ">
+<div className="">
 <SplidImage/>
 </div>
 
