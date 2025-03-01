@@ -4,7 +4,7 @@ import "@splidejs/react-splide/css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 import home from '../../assets/home.jpg';
-import category from '../../assets/category.jpg';
+import category from '../../assets/cat.jpg';
 import multiChoice from '../../assets/multiChoise.jpg';
 import login from '../../assets/login.jpg';
 import sign from '../../assets/signup.jpg';
@@ -23,8 +23,8 @@ const SplidImage = () => {
   return (
     <div className="relative w-full py-10 bg-gray-100">
       {/* Section Title */}
-      <h2 className="text-4xl font-extrabold text-green-700 text-center mb-10 tracking-wide drop-shadow-md">
-        Discover More ✨
+      <h2 className="text-4xl font-extrabold text-green text-center mb-10 tracking-wide drop-shadow-md">
+      ✨ اكتشف اكثر 
       </h2>
 
       <div className="max-w-6xl mx-auto relative">
@@ -51,12 +51,12 @@ const SplidImage = () => {
         >
           {images.map((item, index) => (
             <SplideSlide key={index}>
-              <div className="relative bg-red-300 h-[300px] md:h-[350px] lg:h-[400px] rounded-2xl overflow-hidden transition-transform duration-500  group">
+              <div className="relative bg-red-300 rounded-2xl overflow-hidden transition-transform duration-500  group">
                 {/* Image */}
                 <img
                   src={item.src}
                   alt={item.title}
-                  className="w-full h-full object-fill rounded-2xl transition-transform duration-500  "
+                  className="  rounded-2xl transition-transform duration-500  "
                 />
 
                 {/* Dark Overlay */}

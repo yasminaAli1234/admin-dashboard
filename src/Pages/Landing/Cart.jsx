@@ -11,7 +11,7 @@ const Cart = () => {
     <div className="flex flex-col items-center justify-center w-full min-h-screen  p-6">
       {/* Cart Header */}
       <h2 className="text-4xl font-extrabold text-green mb-10 tracking-wide drop-shadow-lg">
-        Your Cart <span className="text-green">🛒</span>
+      <span className="text-black">🛒</span> عربة التسوق  
       </h2>
 
       {/* Grid Container for Images */}
@@ -28,7 +28,7 @@ const Cart = () => {
             <img
               src={img}
               alt={`Cart Item ${index + 1}`}
-              className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110 opacity-90"
+              className="w-full h-full  rounded-2xl transition-transform duration-500 group-hover:scale-110 opacity-90"
             />
 
             {/* Overlay Effect */}
@@ -38,11 +38,11 @@ const Cart = () => {
       </div>
 
       {/* Checkout Button */}
-  <Link to="https://play.google.com/store/apps/details?id=com.app.marfa">
-  <button className="mt-12 px-10 py-4 bg-gradient-to-r from-green to-green text-white font-bold text-lg rounded-full shadow-lg transition-all transform hover:scale-110 hover:from-green-600  active:scale-95">
-        Proceed to Checkout
-      </button>
-  </Link>
+ 
+  <Link to="https://play.google.com/store/apps/details?id=com.app.marfa" className="mt-6 px-8 py-3 bg-green text-white rounded-lg text-lg transition duration-300 hover:bg-green-700 shadow-md text-center mb-7">
+   اكتشف الان
+</Link>
+ 
     </div>
   );
 };

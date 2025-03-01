@@ -8,9 +8,13 @@ import appImage from '../../assets/content.png'
 import mobileImage from '../../assets/tele.png'
 import app from '../../assets/app.jpg'
 import play from '../../assets/play.jpg'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SplidImage from './SplidImage';
 import Cart from './Cart';
+
+import home from '../../assets/content.png';
+import Google from '../../assets/Google';
+import App from '../../assets/App';
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -28,9 +32,9 @@ const Landing = () => {
   </p>
 
   {/* Button */}
-  <button className="mt-6 px-8 py-3 bg-green text-white rounded-lg text-lg transition duration-300 hover:bg-green-700 shadow-md">
-    تحميل التطبيق
-  </button>
+  <Link to="/app-download" className="mt-6 px-8 py-3 bg-green text-white rounded-lg text-lg transition duration-300 hover:bg-green-700 shadow-md text-center mb-7">
+  تحميل التطبيق
+</Link>
 
   {/* Optional Background Text */}
   <span className="absolute bottom-6 text-black font-bold text-1xl">مِنك وليك</span>
@@ -108,7 +112,7 @@ const Landing = () => {
           className="w-full h-auto object-contain"
         />
         <img
-          src={appImage} 
+          src={home} 
           alt="App Screen"
           className="absolute top-0 left-0 w-full h-full object-contain  "
         />
@@ -120,11 +124,19 @@ const Landing = () => {
       <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">حمل تطبيق مرفأ الان</h3>
       <span className="text-lg sm:text-xl font-semibold text-gray-600 mb-4">مِنك وليك</span>
 
-      {/* Buttons */}
-      <div className="flex justify-center md:justify-start gap-4 flex-wrap">
-        <img src={play} alt="Play Store" className="w-[140px] sm:w-[180px] md:w-[220px] h-auto object-contain rounded-sm" />
-        <img src={app} alt="App" className="w-[140px] sm:w-[180px] md:w-[220px] h-auto object-contain rounded-sm" />
-      </div>
+  {/* Buttons */}
+{/* Buttons */}
+{/* Buttons */}
+<div className="flex flex-col md:flex-row justify-center md:justify-start gap-2">
+  <Link to="https://play.google.com/store/apps/details?id=com.app.marfa" className=" scale-90 md:scale-100">
+    <Google />
+  </Link>
+  <Link to="https://play.google.com/store/apps/details?id=com.app.marfa" className=" scale-90 md:scale-100">
+    <App />
+  </Link>
+</div>
+
+
     </div>
   </div>
 
