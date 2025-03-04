@@ -32,7 +32,7 @@ const Landing = () => {
   </p>
 
   {/* Button */}
-  <Link to="/app-download" className="mt-6 px-8 py-3 bg-green text-white rounded-lg text-lg transition duration-300 hover:bg-green-700 shadow-md text-center mb-7">
+  <Link to="https://play.google.com/store/apps/details?id=com.app.marfa" className="mt-6 px-8 py-3 bg-green text-white rounded-lg text-lg transition duration-300 hover:bg-green-700 shadow-md text-center mb-7">
   تحميل التطبيق
 </Link>
 
