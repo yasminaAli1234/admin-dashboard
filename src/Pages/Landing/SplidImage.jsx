@@ -1,78 +1,87 @@
 import React from "react";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaCheckCircle, FaLayerGroup, FaPlus, FaUser } from "react-icons/fa";
 
-import home from '../../assets/home.jpg';
-import category from '../../assets/cat.jpg';
-import multiChoice from '../../assets/multiChoise.jpg';
-import login from '../../assets/login.jpg';
-import sign from '../../assets/signup.jpg';
-import add from '../../assets/add.jpg';
+import home from "../../assets/home.jpg";
+import category from "../../assets/cat.jpg";
+import multiChoice from "../../assets/multiChoise.jpg";
+import login from "../../assets/login.jpg";
+import sign from "../../assets/signup.jpg";
+import add from "../../assets/add.jpg";
 
-const images = [
-  { src: home, title: "Explore Our World" },
-  { src: category, title: "Browse by Category" },
-  { src: multiChoice, title: "Multiple Choices, One Destination" },
-  { src: login, title: "Login" },
-  { src: sign, title: "Sign Up" },
-  { src: add, title: "Add Your Favorites" },
+const features = [
+  { icon: <FaLayerGroup />, text: "تنظيم الفئات بسهولة" },
+  { icon: <FaCheckCircle />, text: "خيارات متعددة وسهلة الوصول" },
+  { icon: <FaUser />, text: "تجربة تسجيل دخول سلسة" },
+  { icon: <FaPlus />, text: "إضافة المفضلات بنقرة واحدة" },
 ];
+
+const images = [home, category, multiChoice, login, sign, add];
 
 const SplidImage = () => {
   return (
-    <div className="relative w-full py-10 bg-gray-100">
-      {/* Section Title */}
-      <h2 className="text-4xl font-extrabold text-green text-center mb-10 tracking-wide drop-shadow-md">
-      ✨ اكتشف اكثر 
-      </h2>
+    <section className="relative w-full py-20 px-6 bg-gradient-to-b from-green to-white">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        
+        {/* Left Side - Features & Highlights */}
+        <div className="text-start md:text-right">
+          <h2 className="text-5xl font-extrabold text-white mb-6 leading-tight">
+            ✨ اكتشف أكثر  
+          </h2>
+          <p className="text-lg text-gray-600 mb-8">
+            استمتع بتجربة استخدام سلسة مع ميزاتنا الفريدة التي تجعل التنقل سهلاً وممتعًا!
+          </p>
+          
+          <ul className="space-y-6">
+            {features.map((feature, index) => (
+              <li
+                key={index}
+                className="flex items-center justify-center md:justify-end space-x-4 text-lg text-gray-700 transition-all duration-500 hover:scale-105"
+              >
+                <span className="text-green-600 text-2xl">{feature.icon}</span>
+                <span className="font-semibold">{feature.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      <div className="max-w-6xl mx-auto relative">
-        {/* Splide Carousel */}
-        <Splide
-          options={{
-            type: "loop",
-            perPage: 3,
-            focus: "center",
-            autoplay: true,
-            interval: 3000,
-            speed: 800,
-            gap: "1.5rem",
-            arrows: true, // Custom arrows below
-            pagination: false,
-            pauseOnHover: true,
-            drag: true,
-            breakpoints: {
-              1024: { perPage: 2 },
-              768: { perPage: 1 },
-            },
+   {/* Right Side - Creative Circular Image Layout */}
+<div className="relative flex justify-center items-center">
+  <div className="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px] flex justify-center items-center">
+    {images.map((img, index) => {
+      const angle = (index * 360) / images.length;
+      const radius = 130; // Slightly increased for better spacing
+
+      return (
+        <div
+          key={index}
+          className="absolute w-[120px] h-[120px] md:w-[140px] md:h-[140px] rounded-full overflow-hidden shadow-lg border-4 border-white transition-all duration-500 hover:scale-110"
+          style={{
+            transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)`,
           }}
-          className="overflow-hidden"
         >
-          {images.map((item, index) => (
-            <SplideSlide key={index}>
-              <div className="relative bg-red-300 rounded-2xl overflow-hidden transition-transform duration-500  group">
-                {/* Image */}
-                <img
-                  src={item.src}
-                  alt={item.title}
-                  className="  rounded-2xl transition-transform duration-500  "
-                />
+          <img
+            src={img}
+            alt={`Image ${index + 1}`}
+            className="w-full h-full object-contain rounded-full"
+          />
+        </div>
+      );
+    })}
 
-                {/* Dark Overlay */}
-                {/* <div className="absolute inset-0 bg-black/40 opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div> */}
+    {/* Center Image */}
+    <div className="absolute w-[180px] h-[180px] md:w-[220px] md:h-[220px] rounded-full overflow-hidden shadow-xl border-4 border-white bg-white flex justify-center items-center">
+      <img
+        src={home}
+        alt="Center"
+        className="w-full h-full object-cover rounded-full"
+      />
+    </div>
+  </div>
+</div>
 
-                {/* Title Overlay */}
-                <div className="absolute bottom-8 left-6 text-green text-2xl font-semibold tracking-wide transition-all duration-500 translate-y-6 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 drop-shadow-lg">
-                  {item.title}
-                </div>
-              </div>
-            </SplideSlide>
-          ))}
-        </Splide>
 
       </div>
-    </div>
+    </section>
   );
 };
 
