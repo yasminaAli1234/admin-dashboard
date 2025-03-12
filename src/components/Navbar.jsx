@@ -44,7 +44,7 @@ const Navbar = ({ isCollapsed, setIsCollapsed }) => {
             />
           </div>
           <div className="text-sm font-bold mr-2">
-            <h2 className="text-xs text-black">John Doe</h2>
+            <h2 className="text-xs text-black">Marfaa</h2>
             <span className="text-xs text-gray-700">Owner</span>
           </div>
 

@@ -47,8 +47,8 @@ const Settings = () => {
 
   const handleSubmitArea = () => {
     if (!areaName || !selectedCity) return auth.toastError("Please enter area name and select a city.");
-    postArea({ name: areaName, city_id: selectedCity }, "Area added successfully");
-    refetchArea();
+    postArea({ name: areaName, city_id: selectedCity }, "Area added successfully").then(()=>refetchArea());
+    // refetchArea();
     setAreaName("");
     setSelectedCity("");
     setShowAddPopup(false);

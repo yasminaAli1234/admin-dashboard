@@ -60,7 +60,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             <p>Products</p>
           </Link>
 
-          <Link
+          {/* <Link
             to="/order"
             className={`text-black text-lg font-medium p-2 rounded-md flex items-center gap-2 ${
               location.pathname === "/order" ? "bg-main text-white" : "bg-white"
@@ -68,7 +68,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           >
             <div className="w-5 h-5"><Image3 /></div>
             <p>Orders</p>
-          </Link>
+          </Link> */}
 
           <Link
             to="/user"
