@@ -24,7 +24,7 @@ import content from "../../assets/content.png";
 import home from "../../assets/home.jpg";
 import Google from "../../assets/Google";
 import App from "../../assets/App";
-import Cloth from "../../assets/cloth";
+
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { useState } from "react";
