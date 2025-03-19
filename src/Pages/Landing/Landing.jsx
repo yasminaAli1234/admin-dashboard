@@ -87,7 +87,7 @@ const Landing = () => {
 
         {/* Mobile Dropdown Menu */}
         {menuOpen && (
-          <nav className="md:hidden bg-green text-white shadow-md py-2">
+          <nav className="md:hidden bg-green text-white px-5 shadow-md py-2">
             <ul className="flex flex-col space-y-2 text-center">
               {sections.map((section) => (
                 <li key={section.id}>
