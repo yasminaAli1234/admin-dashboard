@@ -93,7 +93,7 @@ const Landing = () => {
                 <li key={section.id}>
                   <button
                     onClick={() => scrollToSection(section.id)}
-                    className={`block py-2 text-lg ${
+                    className={`block py-2 bg-transparent text-lg ${
                       activeLink === section.id
                         ? "text-main font-bold"
                         : "text-white"
