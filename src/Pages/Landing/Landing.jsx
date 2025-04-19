@@ -111,7 +111,7 @@ const Landing = () => {
         {/* Landing Section with Linear Gradient */}
         <div
   id="marfa"
-  className="bg-gradient-to-b mt-10 from-green to-white h-auto min-h-[450px] w-full flex flex-col lg:flex-row items-center justify-between text-center lg:text-right relative overflow-hidden rounded-b-[100px] px-6 sm:px-10 md:px-16 lg:px-20 py-10"
+  className="bg-gradient-to-b mt-10 from-[#14532db2] to-[#e8f5e9] h-auto min-h-[450px] w-full flex flex-col lg:flex-row items-center justify-between text-center lg:text-right relative overflow-hidden rounded-b-[100px] px-6 sm:px-10 md:px-16 lg:px-20 py-10"
 >
   {/* Left Side - Image */}
   <div className="flex justify-center lg:justify-start w-full lg:w-1/2 mb-6 lg:mb-0">
@@ -221,7 +221,7 @@ const Landing = () => {
       {/* New Section Below - Image Slider & Features */}
 <div
   id="discover"
-  className="w-full flex flex-col lg:flex-row items-center justify-between px-4 sm:px-10 md:px-16 lg:px-20 mt-12 bg-gradient-to-b from-white to-green py-10 gap-10"
+  className="w-full flex flex-col lg:flex-row items-center justify-between px-4 sm:px-10 md:px-16 lg:px-20 mt-12 bg-gradient-to-b from-[#ffffffef] to-[#14532db2] py-10 gap-10"
 >
   {/* Left Side - Image Slider */}
   <div className="w-full lg:w-1/2 flex justify-center">
@@ -341,7 +341,7 @@ const Landing = () => {
 
         <div
           id="download"
-          className="flex mt-10 flex-col min-h-screen bg-gradient-to-b from-white to-green"
+          className="flex mt-10 flex-col min-h-screen bg-gradient-to-b from-[#e8f5e9] to-[#14532db2]"
         >
           {/* Container */}
 
