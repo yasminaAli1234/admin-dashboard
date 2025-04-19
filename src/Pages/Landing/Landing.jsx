@@ -4,7 +4,7 @@ import image1 from "../../assets/adv1.jpg";
 import image2 from "../../assets/adv2.jpg";
 import image3 from "../../assets/adv3.jpg";
 import image4 from "../../assets/adv4.jpg";
-
+import image101 from '../../assets/img101.jpg'
 import m1 from "../../assets/m1.png";
 import m2 from "../../assets/m2.png";
 import m3 from "../../assets/m3.png";
@@ -110,50 +110,50 @@ const Landing = () => {
       <div className=" mt-10 flex flex-col">
         {/* Landing Section with Linear Gradient */}
         <div
-          id="marfa"
-          className="bg-gradient-to-b mt-10 from-green to-white h-[450px] w-full flex flex-col lg:flex-row items-center justify-between text-center lg:text-right relative overflow-hidden rounded-b-[100px] px-20"
-        >
-          {/* Left Side - Image */}
-          <div className="flex justify-start lg:w-1/2">
-  <img
-    src={lan}
-    alt="Logo"
-    className="w-40 h-40 lg:w-48 lg:h-60 mb-8 lg:mb-0 rounded-t-full"
-    style={{ borderBottomLeftRadius: "0", borderBottomRightRadius: "0" }}
-  />
+  id="marfa"
+  className="bg-gradient-to-b mt-10 from-green to-white h-auto min-h-[450px] w-full flex flex-col lg:flex-row items-center justify-between text-center lg:text-right relative overflow-hidden rounded-b-[100px] px-6 sm:px-10 md:px-16 lg:px-20 py-10"
+>
+  {/* Left Side - Image */}
+  <div className="flex justify-center lg:justify-start w-full lg:w-1/2 mb-6 lg:mb-0">
+    <div className="w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] px-4 sm:px-6">
+      <img
+        src={image101}
+        alt="Logo"
+        className="w-full h-auto object-contain rounded-3xl shadow-xl"
+      />
+    </div>
+  </div>
+
+  {/* Right Side - Content */}
+  <div className="w-full lg:w-1/2 flex flex-col items-end text-right">
+    {/* Logo - Optional if needed */}
+    <img
+      src={logo}
+      alt="Logo"
+      className="w-24 h-24 lg:w-40 lg:h-40 mb-4 hidden lg:block"
+    />
+
+    {/* Paragraph */}
+    <p className="text-black text-lg md:text-xl font-semibold px-4 sm:px-6 lg:px-0 lg:w-[90%] leading-relaxed">
+      تطبيق مبتكر يتيح عرض وإضافة منتجات مستعملة أو جديدة بأسعار رمزية،
+      مما يوفر للأشخاص المحتاجين فرصة شراء سلع بجودة عالية، ويمنح
+      الراغبين فرصة لمساعدة غيرهم بسهولة.
+    </p>
+
+    {/* Button & Text */}
+    <div className="flex flex-col gap-4 sm:flex-row items-center justify-end w-full mt-6">
+      <span className="text-gray-500 font-bold text-xl">مِنك وليك</span>
+
+      <Link
+        to="https://play.google.com/store/apps/details?id=com.app.marfa"
+        className="px-6 py-3 bg-main text-white rounded-full text-base md:text-lg transition duration-300 hover:bg-green-700 shadow-md text-center"
+      >
+        تحميل التطبيق
+      </Link>
+    </div>
+  </div>
 </div>
 
-
-          {/* Right Side - Content */}
-          <div className="lg:w-1/2 flex flex-col items-end text-right">
-            {/* Logo - Optional if needed */}
-            <img
-              src={logo}
-              alt="Logo"
-              className="w-40 h-40 lg:w-48 lg:h-48 mb-4 hidden lg:block"
-            />
-
-            {/* Paragraph */}
-            <p className="text-black text-xl font-semibold px-6 sm:w-[70%] md:w-[60%] lg:w-[80%] leading-relaxed">
-              تطبيق مبتكر يتيح عرض وإضافة منتجات مستعملة أو جديدة بأسعار رمزية،
-              مما يوفر للأشخاص المحتاجين فرصة شراء سلع بجودة عالية، ويمنح
-              الراغبين فرصة لمساعدة غيرهم بسهولة.
-            </p>
-
-            {/* Button & Text - Flex Layout */}
-            <div className="flex flex-col gap-7 sm:flex-row items-center justify-end w-full mt-4">
-              {/* Optional Background Text */}
-              <span className="text-gray-500 font-bold text-xl">مِنك وليك</span>
-
-              <Link
-                to="https://play.google.com/store/apps/details?id=com.app.marfa"
-                className="px-8 py-3 bg-main text-white rounded-full text-lg transition duration-300 hover:bg-green-700 shadow-md text-center mb-4 sm:mb-0 sm:mr-4"
-              >
-                تحميل التطبيق
-              </Link>
-            </div>
-          </div>
-        </div>
 
         {/* Advantage Section */}
         <div id="features" className="advantage flex-grow bg-white py-12">
@@ -218,64 +218,65 @@ const Landing = () => {
         </div>
 
         {/* New Section Below - Image Slider & Features */}
-        <div
-          id="discover"
-          className="w-full flex flex-col lg:flex-row items-center justify-between px-20 mt-12 bg-gradient-to-b from-white to-green"
-        >
-          {/* Left Side - Image Slider */}
-          <div className="lg:w-1/2 rounded-xl p-4">
-            <Splide
-              options={{
-                type: "loop",
-                perPage: 1,
-                autoplay: true,
-                interval: 3000,
-                pagination: true,
-                arrows: true,
-              }}
-              className="w-[60%] lg:w-[40%]"
-            >
-              <SplideSlide>
-                <img
-                  src={home}
-                  alt="Feature 1"
-                  className="rounded-xl shadow-lg w-full h-[300px] object-contain"
-                />
-              </SplideSlide>
-              <SplideSlide>
-                <img
-                  src={content}
-                  alt="Feature 2"
-                  className="rounded-xl shadow-lg w-full h-[300px] object-contain"
-                />
-              </SplideSlide>
-              <SplideSlide>
-                <img
-                  src={fav}
-                  alt="Feature 3"
-                  className="rounded-xl shadow-lg w-full h-[300px] object-contain"
-                />
-              </SplideSlide>
-            </Splide>
-          </div>
+      {/* New Section Below - Image Slider & Features */}
+<div
+  id="discover"
+  className="w-full flex flex-col lg:flex-row items-center justify-between px-4 sm:px-10 md:px-16 lg:px-20 mt-12 bg-gradient-to-b from-white to-green py-10 gap-10"
+>
+  {/* Left Side - Image Slider */}
+  <div className="w-full lg:w-1/2 flex justify-center">
+    <Splide
+      options={{
+        type: "loop",
+        perPage: 1,
+        autoplay: true,
+        interval: 3000,
+        pagination: true,
+        arrows: true,
+      }}
+      className="w-full max-w-[400px] sm:max-w-[500px]"
+    >
+      <SplideSlide>
+        <img
+          src={home}
+          alt="Feature 1"
+          className="rounded-xl shadow-lg w-full h-[250px] sm:h-[300px] object-contain"
+        />
+      </SplideSlide>
+      <SplideSlide>
+        <img
+          src={content}
+          alt="Feature 2"
+          className="rounded-xl shadow-lg w-full h-[250px] sm:h-[300px] object-contain"
+        />
+      </SplideSlide>
+      <SplideSlide>
+        <img
+          src={fav}
+          alt="Feature 3"
+          className="rounded-xl shadow-lg w-full h-[250px] sm:h-[300px] object-contain"
+        />
+      </SplideSlide>
+    </Splide>
+  </div>
 
-          {/* Right Side - Content */}
-          <div className="lg:w-1/2 flex flex-col p-2 items-end text-right">
-            <h2 className="text-4xl font-bold text-main mb-4">اكتشف أكثر</h2>
-            <p className="text-1xl font-bold text-gray-800 mt-4 mb-4">
-              استمتع بتجربة استخدام سلسة مع ميزاتنا الفريدة التي تجعل التنقل!
-              سهلاً وممتعًا
-            </p>
-            <ul className="text-lg text-black font-semibold space-y-3 px-6">
-              <li>✅ تنظيم الفئات بسهولة</li>
-              <li>✅ تجربة تسجيل دخول سلسة</li>
-              <li>✅ إضافة المفضلات بنقرة واحدة</li>
-              <li>✅ شحن سريع وآمن لجميع الطلبات</li>
-              <li>✅ مدفوعات آمنة 100% ومحمية</li>
-              <li>✅ عروض وخصومات حصرية لك</li>
-            </ul>
-          </div>
-        </div>
+  {/* Right Side - Content */}
+  <div className="w-full lg:w-1/2 flex flex-col p-4 items-end text-right">
+    <h2 className="text-3xl md:text-4xl font-bold text-main mb-4">اكتشف أكثر</h2>
+    <p className="text-lg md:text-xl font-bold text-gray-800 mt-2 mb-4 leading-relaxed">
+      استمتع بتجربة استخدام سلسة مع ميزاتنا الفريدة التي تجعل التنقل سهلاً وممتعًا
+    </p>
+    <ul className="text-base md:text-lg text-black font-semibold space-y-2 sm:space-y-3 px-2 sm:px-6">
+      <li>✅ تنظيم الفئات بسهولة</li>
+      <li>✅ تجربة تسجيل دخول سلسة</li>
+      <li>✅ إضافة المفضلات بنقرة واحدة</li>
+      <li>✅ شحن سريع وآمن لجميع الطلبات</li>
+      <li>✅ مدفوعات آمنة 100% ومحمية</li>
+      <li>✅ عروض وخصومات حصرية لك</li>
+    </ul>
+  </div>
+</div>
+
 
         {/* New Splide Row with 5 Images */}
 
@@ -362,32 +363,29 @@ const Landing = () => {
             </div>
 
             {/* Right Section: Text & Buttons */}
-            <div className="flex flex-col text-center md:text-right mt-6 md:mt-0 w-full md:w-[50%]">
-              <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">
-                حمل تطبيق مرفأ الان
-              </h3>
-              <span className="text-lg sm:text-xl font-semibold text-gray-600 mb-4">
-                مِنك وليك
-              </span>
+            <div className="flex flex-col text-end md:text-right mt-6 md:mt-0 w-full md:w-1/2 px-4 sm:px-6">
+  <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">
+    حمل تطبيق مرفأ الآن
+  </h3>
+  <span className="text-base sm:text-xl font-semibold text-gray-600 mb-4">
+    مِنك وليك
+  </span>
 
-              {/* Buttons */}
-              {/* Buttons */}
-              {/* Buttons */}
-              <div className="flex flex-col md:flex-row justify-center md:justify-start gap-2">
-                <Link
-                  to="https://play.google.com/store/apps/details?id=com.app.marfa"
-                  className=" scale-90 md:scale-100"
-                >
-                  <Google />
-                </Link>
-                <Link
-                  to="https://play.google.com/store/apps/details?id=com.app.marfa"
-                  className=" scale-90 md:scale-100"
-                >
-                  <App />
-                </Link>
-              </div>
-            </div>
+  {/* Buttons */}
+  <div className="flex flex-col sm:flex-row justify-end items-end gap-3 sm:gap-4">
+    <Link
+      to="https://play.google.com/store/apps/details?id=com.app.marfa"
+      className="transform hover:scale-105 transition duration-300"
+    >
+      <Google />
+    </Link>
+    {/* لو عندك زر للآب ستور ممكن تضيفه هنا */}
+    {/* <Link to="https://apps.apple.com/app">
+      <AppStore />
+    </Link> */}
+  </div>
+</div>
+
           </div>
 
           {/* Footer Section */}
