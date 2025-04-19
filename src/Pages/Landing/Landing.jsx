@@ -390,7 +390,7 @@ const Landing = () => {
 
           {/* Footer Section */}
           <div className="w-full bg-main  text-white text-center py-6">
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-7">
               <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-8 md:space-y-0">
                 {/* Left Column: Contact */}
                 <div className="flex flex-col items-center md:items-start text-center md:text-left w-full md:w-1/3">
