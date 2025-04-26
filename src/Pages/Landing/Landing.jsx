@@ -398,19 +398,30 @@ const Landing = () => {
                     تواصل معنا
                   </h2>
                   <ul className="space-y-2 sm:space-y-4">
-                    <li className="flex items-center justify-center md:justify-start gap-1">
-                      <i className="fas fa-envelope"></i>
-                      <span>email@example.com</span>
-                    </li>
-                    <li className="flex items-center justify-center md:justify-start gap-1">
-                      <i className="fas fa-map-marker-alt"></i>
-                      <span>1234 Street, City, Country</span>
-                    </li>
-                    <li className="flex items-center justify-center md:justify-start gap-1">
-                      <i className="fas fa-phone-alt"></i>
-                      <span>+1 (234) 567-890</span>
-                    </li>
-                  </ul>
+  {/* Instagram */}
+  <li className="flex items-center justify-center md:justify-start gap-1">
+    <a href="https://www.instagram.com/Marfa.25" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+      <i className="fab fa-instagram"></i>
+      <span className="text-blue-300 underline">Marfa.25</span>
+    </a>
+  </li>
+
+  {/* Facebook */}
+  <li className="flex items-center justify-center md:justify-start gap-1">
+    <a href="https://www.facebook.com/marfa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+      <i className="fab fa-facebook"></i>
+      <span className="text-blue-300 underline">marfa</span>
+    </a>
+  </li>
+
+  {/* TikTok */}
+  <li className="flex items-center justify-center md:justify-start gap-1">
+    <a href="https://www.tiktok.com/@Marfa.25" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+      <i className="fab fa-tiktok"></i>
+      <span className="text-blue-300 underline">Marfa.25</span>
+    </a>
+  </li>
+</ul>
                 </div>
 
                 {/* Middle Column: Navigation */}
