@@ -397,7 +397,7 @@ const Landing = () => {
                   <h2 className="text-xl sm:text-2xl font-bold mb-4">
                     تواصل معنا
                   </h2>
-                  <ul className="space-y-2 sm:space-y-4">
+                  <ul className="space-y-2 sm:space-y-3">
   {/* Instagram */}
   <li className="flex items-center justify-center md:justify-start gap-1">
     <a href="https://www.instagram.com/Marfa.25" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
